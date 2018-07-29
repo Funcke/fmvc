@@ -1,0 +1,17 @@
+# fmvc
+A small Model-View-Controller framework.
+Not very capable yet but still suitable for basic crud apps.
+
+## How-To Create a route
+1. Create class extending Controller base-class in _controller_
+2. define routes in config/routes.json just like the examples (attention: identifiers have to be passed as Method parameter and not as URI extension)
+3. just use
+
+## Create a view
+1. create a php file with content to be displayed in _views_
+2. edit base.php as you like. It resembles the basic layout
+
+## Assets
+Stetic assets such as CSS or JS are delivered normally and just have to be inlcuded in the header of base.php
+
+## _Only compatible with apache webserver_

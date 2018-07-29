@@ -1,0 +1,18 @@
+{
+    "base_url": "/fmvc",
+    "/": {
+        "method": "GET",
+        "controller": "IndexController",
+        "action": "index"
+    },
+    "/about": {
+        "method": "GET",
+        "controller": "IndexController",
+        "action": "about"
+    },
+    "/user": {
+        "method": "GET",
+        "controller": "IndexController",
+        "action": "user"
+    }
+}
