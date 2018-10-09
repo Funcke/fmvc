@@ -9,6 +9,7 @@
     <title><?php echo $params["title"]; ?></title>
 </head>
 <body>
+    <nav>Test</nav>
     <?php include("views/".$name.".php"); ?>
 </body>
-</html> 
+</html>

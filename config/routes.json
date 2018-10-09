@@ -1,18 +1,23 @@
 {
-    "base_url": "/fmvc",
-    "/": {
+    "base_url": "/",
+    "": {
         "method": "GET",
         "controller": "IndexController",
         "action": "index"
     },
-    "/about": {
+    "about": {
         "method": "GET",
         "controller": "IndexController",
         "action": "about"
     },
-    "/user": {
+    "user": {
         "method": "GET",
         "controller": "IndexController",
         "action": "user"
+    },
+    "json": {
+        "method": "GET",
+        "controller": "IndexController",
+        "action": "json"
     }
 }
