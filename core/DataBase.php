@@ -23,6 +23,9 @@ namespace Core {
           $params['protocol'].'://'.$params['host'].':'.$params['port'].'/'.$params['database'],
           $params['username'],
           $params['password']);
+        if($this->connection == false) {
+          throw new Exception('An error occured while connection to the databse!');
+        }
     }
 
     /**

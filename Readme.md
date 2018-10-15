@@ -9,9 +9,13 @@ Not very capable yet but still suitable for basic crud apps.
 
 ## Create a view
 1. create a php file with content to be displayed in _views_
-2. edit base.php as you like. It resembles the basic layout
+2. edit base.php as you like. It resembles the basic page layout
 
 ## Assets
 Stetic assets such as CSS or JS are delivered normally and just have to be inlcuded in the header of base.php
 
+## Database
+The DataBase-class provides automated connection to the database.
+The corresponding informations have to be put into config/db.json
+ -> currently supported are automatic INSERT and SELECT statements
 ## _Only compatible with apache webserver_
