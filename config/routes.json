@@ -5,19 +5,14 @@
         "controller": "IndexController",
         "action": "index"
     },
-    "about": {
-        "method": "GET",
-        "controller": "IndexController",
-        "action": "about"
+    "create": {
+      "method": "POST",
+      "controller": "IndexController",
+      "action": "create"
     },
-    "user": {
+    "test": {
         "method": "GET",
         "controller": "IndexController",
-        "action": "user"
-    },
-    "json": {
-        "method": "GET",
-        "controller": "IndexController",
-        "action": "json"
+        "action": "iJson"
     }
 }

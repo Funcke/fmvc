@@ -7,7 +7,7 @@ namespace Core {
   /**
    * Class representing the Database Connection
    */
-  class DataBase {
+  class SqlDataBase {
     /**
      * Connection to the Database
      * @var PDO
@@ -56,12 +56,7 @@ namespace Core {
      */
     public function store(object $class):boolean {
       $object = json_decode(json_encode($class), true);
-      $sql = "INSERT INTO ".get_class($class)."(";
-      foreach($object as $key => $value) {
-        $sql .= $key.", ";
-      }
-      $sql = substr($sql, 0, -2);
-      $sql .= ") VALUES(";
+      $sql = "INSERT INTO ".get_class($class)."s(";
       foreach($object as $key => $value) {
         $sql .= $key.", ";
       }

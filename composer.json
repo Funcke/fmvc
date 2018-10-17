@@ -1,0 +1,13 @@
+{
+    "name": "jonas/project",
+    "description": "Project repo for my app",
+    "type": "project",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "jonas.funcke",
+            "email": "jonas@funcke.work"
+        }
+    ],
+    "require": {}
+}

@@ -1,5 +1,5 @@
 <?php
-namespace Utils {
+namespace Core {
     class PageUtils {
       public static function renderErrorPage($params) {
           http_response_code($params["code"]);

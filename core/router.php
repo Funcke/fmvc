@@ -3,8 +3,7 @@ namespace Core {
   /**
    * @author Jonas Funcke <jonas@funcke.work>
    */
-  require_once('PageUtils.php');
-  use Utils\PageUtils;
+  use Core\PageUtils;
   class Router {
       // contains content of config/routes.json
       private $routes;
@@ -36,7 +35,7 @@ namespace Core {
        * @param  Request $request    Request Object to dispatch
        * @return none
        */
-      private function dispatchRequest($controller, $action, $request) {
+      private function dispatchRequest(string $controller, string $action, Request $request) {
           try{
               if(!require_once("controller/".$request->controller.".php")) {
                   throw new Exception("Controller Not found");
