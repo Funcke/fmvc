@@ -8,7 +8,7 @@ class IndexController extends Controller{
     }
 
     public static function create($request) {
-      echo "rlly Nigga?";
+      echo "Hello World";
     }
 
     public static function iJson($request) {
