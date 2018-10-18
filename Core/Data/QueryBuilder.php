@@ -163,6 +163,7 @@ namespace Core\Data {
          */
         public function values():QueryBuilder {
             $this->query .= " VALUES";
+            return $this;
         }
 
         /**
