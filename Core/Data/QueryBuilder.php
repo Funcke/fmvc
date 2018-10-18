@@ -67,10 +67,13 @@ namespace Core\Data {
          * @param $field array the name of the column
          * @return QueryBuilder Builder Object
          */
-        public function field(array $fields):QueryBuilder {
+        public function fields(array $fields):QueryBuilder {
             foreach($fields as $field) {
-                $this->query .= " ".$field.$this->delimiter();
+                $this->query .= " ".$field;
+                $this->delimiter();
             }
+
+            $this->query = substr($this->query, 0, -2);
             
             return $this;
         }
@@ -153,7 +156,10 @@ namespace Core\Data {
          * @return QueryBuilder
          */
         public function parantheses(array $fields):QueryBuilder {
-            $this->query .= "(".$this->fields($fields).")";
+            $this->query .= "(";
+            $this->fields($fields);
+            $this->query .= ")";
+            return $this;
         }
 
         /**
@@ -163,6 +169,7 @@ namespace Core\Data {
          */
         public function values():QueryBuilder {
             $this->query .= " VALUES";
+            return $this;
         }
 
         /**
