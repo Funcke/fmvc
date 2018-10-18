@@ -2,7 +2,7 @@
 /**
  * Namespace containing all necessary classes of the framework
  */
-namespace Core {
+namespace Core\Data  {
   use \PDO;
   /**
    * Class representing the Database Connection
@@ -70,12 +70,13 @@ namespace Core {
      * Retrives one or more entries from the database matching
      * the given arguments.
      *
+     * @param  string $fields    String listing fields to be selected from table
      * @param  string $table     Name of the class (and also the table)
      * @param  array  $arguments Array of arguments in form of "column" => "predicate"
      * @return array             Array of retrieved objects
      */
-    public function retrieve(string $table, array $arguments):array {
-      $sql = "SELECT * FROM ".$table;
+    public function retrieve(string $fields, string $table, array $arguments):array {
+      $sql = "SELECT ".$fields." FROM ".$table;
       $sql = ($arguments == null? "" : " WHERE ");
       foreach($arguments as $key => $value) {
         $sql .= $key."= '".$value."'";
