@@ -67,7 +67,7 @@ namespace Core\Data {
          * @param $field array the name of the column
          * @return QueryBuilder Builder Object
          */
-        public function field(array $fields):QueryBuilder {
+        public function fields(array $fields):QueryBuilder {
             foreach($fields as $field) {
                 $this->query .= " ".$field.$this->delimiter();
             }
