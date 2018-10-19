@@ -20,7 +20,7 @@ namespace Core\Data  {
     function __construct() {
         $params = json_decode(file_get_contents('./config/db.json'), true);
         $this->connection = new PDO(
-          $params['protocol'].'://'.$params['host'].':'.$params['port'].'/'.$params['database'],
+          $params['protocol'].':host='.$params['host'].':'.$params['port'].';dbname='.$params['database'],
           $params['username'],
           $params['password']);
         if($this->connection == false) {
@@ -34,9 +34,9 @@ namespace Core\Data  {
      * @param  string $query the query-string
      * @return array  result of query in associaitve array
      */
-    public function query(string $query):array {
+    public function query(string $query) {
       $result = $this->connection->query($query);
-      return $result->fetchAll();
+      return ($result != false?$result->fetchAll():$this->connection->errorInfo());
     }
 
     /**
@@ -74,19 +74,19 @@ namespace Core\Data  {
      * @param  string $table     Name of the class (and also the table)
      * @param  array  $arguments Array of arguments in form of "column" => "predicate"
      * @return array             Array of retrieved objects
-     */
-    public function retrieve(string $fields, string $table, array $arguments):array {
-      $sql = "SELECT ".$fields." FROM ".$table;
-      $sql = ($arguments == null? "" : " WHERE ");
-      foreach($arguments as $key => $value) {
-        $sql .= $key."= '".$value."'";
-      }
-      $results = [];
-      foreach($this->connection->query($sql)->fetchAll() as $result) {
-          array_push($results, (object)$result);
-      }
-      return $results;
-    }
+     *
+    *public function retrieve(string $fields, string $table, array $arguments):array {
+    *  $sql = "SELECT ".$fields." FROM ".$table;
+    *  $sql = ($arguments == null? "" : " WHERE ");
+    *  foreach($arguments as $key => $value) {
+    *    $sql .= $key."= '".$value."'";
+    *  }
+    *  $results = [];
+    *  foreach($this->connection->query($sql)->fetchAll() as $result) {
+    *      array_push($results, (object)$result);
+    *  }
+    *  return $results;
+    *}*/
   }
 }
 ?>
