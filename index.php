@@ -17,7 +17,7 @@
     });
 
     $request = new Request();
-    $router = new Router("config/routes.json");
+    $router = new Router();
 
     $router->handleRequest($request);
 ?>

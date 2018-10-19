@@ -9,7 +9,6 @@ namespace Core {
       public $uri;
 
       // Navigation Components
-      public $controller;
       public $action;
       public $params;
       public $method;
