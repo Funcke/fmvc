@@ -1,7 +1,7 @@
 <?php
   require_once('controller/IndexController.php');
   return [
-    'base_url' => '/',
+    'base_url' => '/', #please do only add subfolders
     '' => [
       'GET' =>'IndexController::index',
       'POST' => 'IndexController::create'

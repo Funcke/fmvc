@@ -43,7 +43,7 @@ namespace Core {
        */
       private function prepareRequest($request) {
           $base_url = array_key_exists("base_url", $this->routes)? $this->routes['base_url'] : '/';
-          $request->uri = explode('/', $request->uri)[1];
+          $request->uri = explode($base_url, $request->uri)[1];
 
           if(!array_key_exists($request->uri, $this->routes)) {
               PageUtils::renderErrorPage(array("code" => 404, "message" => "url not found!"));
