@@ -1,10 +1,12 @@
 <?php
-use Core\Data\DataBase;
+use Core\Data\SqlDataBase;
 use COre\Data\SqlStatementBuilder;
 use Core\Controller;
 
 class IndexController extends Controller{
     public static function index($request) {
+      $data = new SqlDataBase();
+      print_r($data->query("SELECT * FROM Test"));
       self::render("index", array("title" => "Welcome"));
     }
 
