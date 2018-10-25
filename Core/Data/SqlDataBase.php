@@ -17,12 +17,12 @@ namespace Core\Data  {
     /**
      * Default c'tor
      */
-    function __construct() {
+    function __construct(string $connection = 'default') {
         $params = json_decode(file_get_contents('./config/db.json'), true);
         $this->connection = new PDO(
-          $params['protocol'].':host='.$params['host'].':'.$params['port'].';dbname='.$params['database'],
-          $params['username'],
-          $params['password']);
+          $params[$connection]['protocol'].':host='.$params[$connection]['host'].':'.$params[$connection]['port'].';dbname='.$params[$connection]['database'],
+          $params[$connection]['username'],
+          $params[$connection]['password']);
         if($this->connection == false) {
           throw new Exception('An error occured while connection to the databse!');
         }
