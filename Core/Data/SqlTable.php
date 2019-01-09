@@ -3,67 +3,118 @@ namespace Core\Data {
     /**
      * Base Class for Object Relational Mapping
      * 
+     * @author Jonas Funcke <jonas@funcke.work>
      */
-    class SqlTable {
+    class SqlTable 
+    {
         private $connection;
-        private $data;
+        private $name;
+        
         /**
-         * splits the object into an associative array
-         * calls build_insert and stores it in Connection
-         */
-        public function store() {
-            $this->prepare();
-            $connection->excute($this->build_insert($data));
+         * default c'tor 
+        **/ 
+        function __construct(string $name)
+        {
+            if(is_null($name))
+                throw new \Exception('SqlTable has to have a name!!');
+            $this->connection = new SqlDataBase();
+            $this->name = $name;
         }
         
         /**
-         * Creates SQL Statement from given array fo data
+         * calls build_insert and stores given data in table
+         * representing current child-class
          * 
-         * @param array $data array containing the fields and values of an object
-         * @return Finished query string, ready for DB insertion
+         * @param array $data associative array representing fields of child-Class to store in form of $field => $value
+         * 
+         * @returns int 0 or 1 representing success of operation
          */
-        private function build_insert(array $data): string {
-            $builder = new QueryBuilder();
-            return $builder->insert()
-            ->table(get_class($this))
-            ->parantheses(array_keys($data))
-            ->values()
-            ->parantheses(array_values($data))
-            ->build();
+        protected function store_raw(array $data):int
+        {
+            $builder = new SqlDatabaseQueryBuilder();
+            $query = $builder->insert($this->name, $data)->build();
+            
+            return $this->connection->execute($query);
         }
         
         /**
-         * Selects all entries from database that fit conditions in
-         * array given as parameter.
+         * Generates a SELECT statement and executes it on the table representing
+         * the current childobject.
          * 
-         * @param array $conditions array containing conditions in format array(array(field  => val, comparator => val, condition => val)
-         * @return array of results
+         * @param string $name name of the Child-Class and the belonging table
+         * @param array $fields containing the identifier of the fields to select
+         * @param array $conditions containing the SELECT conditions in form of $field => $expectedVal
+         * 
+         * @returns array with query results or false
          */
-        public static function find(array $contitions): array {
-            $this->prepare();
-            return $connection->query($this->build_find($data, $conditions));
+        protected static function get_raw(string $name, array $fields, array $conditions):array
+        {
+            $connection = new SqlDataBase();
+            $builder= new SqlDatabaseQueryBuilder();
+            $builder->select($name, $fields);
+            foreach($conditions as $field => $value)
+            {
+                $builder->where($field, $value);
+            }
+            $query = $builder->build();
+            return $connection->query($query);
         }
         
-        private function build_find(array $fields, array $conditions): string {
-            $builder = new QueryBuilder();
-            $builder->select()
-            ->fields(array_keys($fields), false)
-            ->from()->table(get_class($this));
-            foreach($conditions as $conditon) {
-                $builder->condition($condition['field'], $condition['comparator'], $condition['condition']);   
+        /**
+         * Generates UPDATE statement from the given fields with the given contidions 
+         * for the table representing the Child-Class and executes it.
+         * 
+         * @param array $fields associative array containing the identifier for
+         *      the fields to update and their new values in form of $field => $value
+         * 
+         * @param array $conditions associative array containg identifier and expected
+         *     value for conditioned fields in form of $field => $value
+         * 
+         * @returns int 0 or higher, number of modified fields
+         */
+        protected function update_raw(array $fields, array $conditions = null):int
+        {
+            $builder = new SqlDatabaseQueryBuilder();
+            $builder->update($this->name, $fields);
+            if(!is_null($fields))
+            {
+                foreach($conditions as $field => $value)
+                {
+                    $builder->where($field, $value);
+                }
             }
             
-            return $builder->build();
+            $query = $builder->build();
+            print_r($query);
+            return $this->connection->execute($query);
         }
         
-        public static function findById(number $id):array {
-            $this->prepare();
-            return $connection->query($this->build_find($data, array(array('field' => 'id', 'comparator' => '=', 'condition' => $id))));
-        }
-        
-        private function prepare() {
-            $data = json_decode(json_encode($this));
-            $connection = new SqlDataBase();   
+        /**
+         * Generates DELETE statement for table representing Child-Class
+         * deleteing all entries matching conditions provied by params
+         * 
+         * @param array $conditions array representing conditions in form of
+         *     $field => $value
+         * 
+         * @returns int 0 or more, number of deleted entries
+         */
+        protected function delete_raw(array $conditions = null):int
+        {
+            $builder = new SqlDatabaseQueryBuilder();
+            $builder->delete($this->name);
+            $query = '';
+            if($conditions != null)
+            {
+                foreach($conditions as $field => $value)
+                {
+                    $builder->where($field, $value);
+                }
+                $query = $builder->build();
+            } else {
+                $query = $builder->build().' *';
+            }
+            
+            return $this->connection->execute($query);
         }
     }
 }
