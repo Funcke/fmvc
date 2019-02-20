@@ -85,7 +85,6 @@ namespace Core\Data {
             }
             
             $query = $builder->build();
-            print_r($query);
             return $this->connection->execute($query);
         }
         

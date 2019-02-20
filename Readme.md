@@ -1,6 +1,6 @@
 # fmvc
 A small Model-View-Controller framework.
-Not very capable yet but still suitable for basic crud apps.
+It aimes heavily on separating code parts to create small, interchangeable components
 
 ## How-To Create a route
 1. Create class extending Controller base-class in _controller_
@@ -12,7 +12,7 @@ Not very capable yet but still suitable for basic crud apps.
 2. edit base.php as you like. It resembles the basic page layout
 
 ## Assets
-Static assets such as CSS or JS are delivered normally and just have to be inlcuded in the header of base.php
+Stetic assets such as CSS or JS are delivered normally and just have to be inlcuded in the header of base.php
 
 ## Database
 The DataBase-class provides automated connection to the database.

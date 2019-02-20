@@ -1,16 +1,15 @@
 <?php
-  require_once('controller/IndexController.php');
   return [
-    'base_url' => '/', #please do only add subfolders
+    'base_url' => '/htdocs/', #please do only add subfolders
     '' => [
-      'GET' =>'IndexController::index',
-      'POST' => 'IndexController::create'
+      'GET' =>'/test/IndexController::index'
     ],
-    'create' => [
-      'POST' => 'IndexController::create'
+    'authenticate' => [
+      'POST' => 'AuthenticationController::new',
+      'PUT' => 'AuthenticationController::login'
     ],
-    'json' => [
-      'GET' => 'IndexController::iJson'
+    'profile' => [
+      'GET' => 'ProfileController::view'  
     ]
   ];
 ?>

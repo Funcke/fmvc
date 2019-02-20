@@ -1,8 +1,10 @@
 {
-    "protocol": "mysql",
-    "host": "localhost",
-    "username": "root",
-    "password": "",
-    "port": "3306",
-    "database": "test"
+    "default": {
+        "protocol": "mysql",
+        "host": "localhost",
+        "username": "root",
+        "password": "",
+        "port": "3306",
+        "database": "test"
+    }
 }

@@ -50,7 +50,7 @@ namespace Core
                 {
                     foreach($val as $mw)
                     {
-                        require_once('Middleware/' . explode('::',$mw)[0] . '.php');
+                        require_once('Middleware/' .explode('::',$mw)[0] . '.php');
                         $mw($request);
                     }
                 }

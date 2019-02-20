@@ -68,7 +68,7 @@ namespace Core\Data
     public function execute($command):int 
     {
         $res = $this->connection->exec($command);
-        if($res == 0)
+        if(!$res)
         {
             print_r ($this->connection->errorInfo());
         } 
