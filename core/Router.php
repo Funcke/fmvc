@@ -33,7 +33,7 @@ namespace Core
         {
             $this->prepareRequest($request);
 
-            $this->dispatchRequest($request->action, $request);
+            $this->dispatchRequest(end(explode('/',$request->action)), $request);
         }
 
         /**
@@ -94,9 +94,13 @@ namespace Core
             switch($_SERVER["REQUEST_METHOD"]) 
             {
                 case 'GET': $request->params = array_replace([], $_GET); break;
-                case 'POST': $request->params = array_replace([], $_POST); break;
+                case 'POST': 
+                    if($_SERVER["CONTENT_TYPE"] == "multipart/form-data" || $_SERVER["CONTENT_TYPE"] == "application/x-www-form-urlencoded"){
+                        $request->params = array_replace([], $_POST); 
+                        break;
+                    }
                 case 'PUT':
-                case 'DELETE': parse_str(file_getcontents('php://input'), $request->params); break;
+                case 'DELETE': $request->params = json_decode(\file_get_contents('php://input'), true); break;
             }
         }
     }
