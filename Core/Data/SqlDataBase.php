@@ -6,8 +6,8 @@ namespace Core\Data
 {
     use \PDO;
     /**
-     * Class representing the Database Connection
-     * 
+     * Class representing the Database Connection. The implemented driver has to be defined
+     * in the db.json file. As a connection meaning, the PDO class is used.
      * @author Jonas Funcke <jonas@funcke.work>
      */
     class SqlDataBase 
@@ -20,19 +20,23 @@ namespace Core\Data
 
         /**
          * c'tor
-         * 
-         * @param string $connection name of the connection configuration to open 
+         * @param string $connection name of the connection configuration to open
+         * @throws \PDOException if connection to DB fails
+         * @throws \Exception if connection could not be opened
          */
         function __construct(string $connection = 'default') 
         {
             $params = json_decode(file_get_contents('./config/db.json'), true);
             $this->connection = new PDO(
-                $params[$connection]['protocol'].':host='.$params[$connection]['host'].':'.$params[$connection]['port'].';dbname='.$params[$connection]['database'],
+                $params[$connection]['protocol'].':'
+                .($params[$connection]['protocol'] == 'sqlite'? $params[$connection]['host'] : 'host='.$params[$connection]['host'])
+                .($params[$connection]['port'] == '' ? '': ':'.$params[$connection]['port'])
+                .($params[$connection]['database'] == '' ? '' : ';dbname='.$params[$connection]['database']),
                 $params[$connection]['username'],
                 $params[$connection]['password']);
             if($this->connection == false) 
             {
-                throw new Exception('An error occured while connection to the databse!');
+                throw new \Exception('An error occured while connection to the databse!');
             }
     }
 
@@ -55,25 +59,24 @@ namespace Core\Data
             
             return $arr;
         } else {
-            return null;
+            return [];
         }
     }
 
     /**
      * Executes given statement (<b>INSERT, UPDATE, DELETE</b>)
      * Made for queries returning a int or boolean
-     * @param  [type] $command [description]
-     * @return int             [description]
+     * @param  string $command Query
+     * @return int             success information
      */
-    public function execute($command):int 
+    public function execute(string $command):int
     {
         $res = $this->connection->exec($command);
-        if(!$res)
-        {
-            print_r ($this->connection->errorInfo());
-        } 
+        if (!$res) {
+            print_r($this->connection->errorInfo());
+        }
         return $res;
     }
+
   }
 }
-?>

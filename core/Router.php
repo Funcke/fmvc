@@ -1,13 +1,11 @@
 <?php
 namespace Core 
 {
-  /**
-   * @author Jonas Funcke <jonas@funcke.work>
-   */
     use Core\PageUtils;
 
     /**
      * Dispatches incoming request and prepares Request DTO
+     * @author jonas.funcke jonas@funcke.work
      */
     class Router 
     {
@@ -105,4 +103,3 @@ namespace Core
         }
     }
 }
-?>
