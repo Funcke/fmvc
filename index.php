@@ -1,5 +1,4 @@
 <?php
-
     /**
      * Entry-point for application.
      * Please extend as you wish.
@@ -11,6 +10,7 @@
 
     session_start();
 
+    error_reporting(E_ALL);
     spl_autoload_register(function (string $class) {
         $class = str_replace('\\', '/', $class);
         require_once($class . '.php');

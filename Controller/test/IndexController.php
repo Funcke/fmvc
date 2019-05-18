@@ -1,5 +1,4 @@
 <?php
-error_reporting(E_ALL);
 use Core\Controller;
 use Models\User;
 
@@ -14,19 +13,17 @@ class IndexController extends Controller
         include 'views/auth.php';
       }*/
       
-      /*$var = new User();
+      $var = new User();
       $var->Username = "Jonas";
       $var->Password = "Test";
-      $var->Email = "jonas.funckegmail.com";
+      $var->Email = "jonas.funcke@gmail.com";
       $var->Birthdate = date("Y-m-d H:i:s");
-      $var->store();*/
+      $var->store();
       
-      $var = User::findById(18);
+      $var = User::findById(1);
       echo json_encode($var);
       $var->Username = "Test";
       $var->update();
-      echo json_encode(User::findById(18));
+      echo json_encode(User::find([]));
     }
 }
-
-?>

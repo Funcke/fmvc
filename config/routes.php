@@ -1,6 +1,6 @@
 <?php
   return [
-    'base_url' => '/htdocs/', #please do only add subfolders
+    'base_url' => '/', #please do only add subfolders
     '' => [
       'GET' =>'/test/IndexController::index'
     ],
@@ -12,4 +12,3 @@
       'GET' => 'ProfileController::view'  
     ]
   ];
-?>
