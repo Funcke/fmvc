@@ -1,6 +1,7 @@
 RewriteEngine on
 
 RewriteCond %{REQUEST_FILENAME} !index.php
+RewriteCond %{REQUEST_FILENAME} !\.(css|js|png|jpg)$
 RewriteRule .* index.php?url=$0 [QSA,L]
 
 Header set Access-Control-Allow-Origin "*"
