@@ -2,3 +2,8 @@ assets/*
 controler/*
 .DS_Store
 views/*
+config/*
+Controller/*
+Middleware/*
+Models/*
+file.db
