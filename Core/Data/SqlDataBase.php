@@ -27,13 +27,8 @@ namespace Core\Data
         function __construct(string $connection = 'default') 
         {
             $params = json_decode(file_get_contents('./config/db.json'), true);
-            $this->connection = new PDO(
-                $params[$connection]['protocol'].':'
-                .($params[$connection]['protocol'] == 'sqlite'? $params[$connection]['host'] : 'host='.$params[$connection]['host'])
-                .($params[$connection]['port'] == '' ? '': ':'.$params[$connection]['port'])
-                .($params[$connection]['database'] == '' ? '' : ';dbname='.$params[$connection]['database']),
-                $params[$connection]['username'],
-                $params[$connection]['password']);
+            $query = ConnectionStringProducer::produce($params[$connection]);
+            $this->connection = new PDO($query, $params[$connection]['username'], $params[$connection]['password']);
             if($this->connection == false) 
             {
                 throw new \Exception('An error occured while connection to the databse!');
