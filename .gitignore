@@ -1,14 +1,11 @@
-assets/*
-Controller/*
+assets/
+Controller/
 .DS_Store
-views/*
-config/db.json
-config/middleware.php
-config/routes.php
-Controller/*
-Middleware/*
-Models/*
-file.db
+views/
+Controller/
+Middleware/
+Models/
+./file.db
 \.idea/php\.xml
 \.idea/vcs\.xml
 \.idea/modules\.xml
@@ -18,3 +15,5 @@ file.db
 \.idea/dataSources\.xml
 \.idea/dataSources\.local\.xml
 \.idea/misc\.xml
+file\.db
+config/
