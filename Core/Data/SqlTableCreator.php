@@ -6,23 +6,19 @@ use \ReflectionClass;
 use \ReflectionException;
 
 /**
- * Class SqlDatabaseCreator
+ * Class SqlTableCreator
  * @package Core\Data
  */
 class SqlTableCreator
 {
-    private $db;
-
-    function __construct(SqlDataBase &$dataBase) {
-        $this->db = $dataBase;
-    }
 
     /** Creates Database Table
      * @param String $name
+     * @return string $query
      * @throws ReflectionException
      */
-    public function create(String $name) {
-        $this->db->execute($this->generateQuery($name));
+    public static function create(String $name) {
+        return self::generateQuery($name);
     }
 
     /** generates the CREATE statement from the PHPDoc in Entity Class
@@ -30,15 +26,14 @@ class SqlTableCreator
      * @return string - the SQL Query
      * @throws ReflectionException
      */
-    private function generateQuery($name): string {
+    private static function generateQuery($name): string {
         $reflector = new ReflectionClass($name);
         $table = explode('*/', explode('@table ', $reflector->getDocComment())[1])[0];
-        $fields = array_keys(get_object_vars(new $name()));
+        $fields = array_keys(get_class_vars($name));
         $types = array();
         foreach($fields as $field) {
             $types[$field] = explode('*/', explode('@var ', $reflector->getProperty($field)->getDocComment())[1])[0];
         }
-
         $query = "CREATE TABLE " . $table . "(";
         foreach($types as $name => $type) {
             $query .= $name.' '.$type.',';

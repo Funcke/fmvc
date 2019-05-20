@@ -9,18 +9,25 @@ namespace Core\Data {
     {
         private $connection;
         private $name;
-        
+
         /**
-         * default c'tor 
-        **/ 
-        function __construct(string $name)
+         * default c'tor
+         *
+         * @param string $name
+         * @param string $query
+         * @throws \Exception
+         */
+        function __construct(string $name, string $query = '')
         {
             if(is_null($name))
                 throw new \Exception('SqlTable has to have a name!!');
             $this->connection = new SqlDataBase();
             $this->name = $name;
+            if(!$this->connection->query("SELECT 1 FROM " . $name)){
+                $this->connection->query($query);
+            }
         }
-        
+
         /**
          * calls build_insert and stores given data in table
          * representing current child-class

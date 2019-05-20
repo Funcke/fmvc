@@ -57,8 +57,6 @@ namespace Core\Data
         {
             $this->query = 'INSERT INTO '.$table.'(';
             $this->conditions = 0;
-            $count = 0;
-            $id = 0;
             foreach(array_keys($values) as $val)
             {
                 if($val != 'Id'){

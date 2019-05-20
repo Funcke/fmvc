@@ -72,9 +72,6 @@ namespace Core\Data
     public function execute(string $command):int
     {
         $res = $this->connection->exec($command);
-        if (!$res) {
-            print_r($this->connection->errorInfo());
-        }
         return $res;
     }
 

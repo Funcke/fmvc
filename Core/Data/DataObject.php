@@ -16,7 +16,8 @@ namespace Core\Data
          */
         function __construct()
         {
-            parent::__construct(explode('\\', get_class($this))[1]);
+            $fullName = get_class($this);
+            parent::__construct(explode('\\', $fullName)[1], SqlTableCreator::create($fullName));
         }
 
         /**
@@ -32,6 +33,7 @@ namespace Core\Data
          * Returns object or else null.
          * @param int $id - id of the object to retrieve
          * @return DataObject|null - The found Object
+         * @throws \Exception
          */
         public static function findById(int $id)
         {
@@ -59,6 +61,7 @@ namespace Core\Data
          * Objects need to be passed as: $key = $value.
          * @param Array $arr
          * @return array
+         * @throws \Exception
          */
         public static function find($arr):array
         {
@@ -105,5 +108,3 @@ namespace Core\Data
         }
     }
 }
-
-?>
