@@ -23,8 +23,8 @@ namespace Core\Data {
                 throw new \Exception('SqlTable has to have a name!!');
             $this->connection = new SqlDataBase();
             $this->name = $name;
-            if(!$this->connection->query("SELECT 1 FROM " . $name)){
-                $this->connection->query($query);
+            if(!$this->connection->execute("SELECT 1 FROM " . $name)){
+                $this->connection->execute($query);
             }
         }
 

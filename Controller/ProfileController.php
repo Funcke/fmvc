@@ -1,6 +1,7 @@
 <?php
-use Core\Data\SqlDataBase;
 use Core\Controller;
+use Core\Data\SqlDataBase;
+use Core\Data\SqlTableCreator;
 
 class ProfileController extends Controller
 {
@@ -23,5 +24,11 @@ class ProfileController extends Controller
     {
         
     }
+
+    public static function showUserStruct($request)
+    {
+        #$base = new SqlDataBase();
+        #$base->execute(SqlTableCreator::create('Models\User'));
+        print SqlTableCreator::create('Models\User');
+    }
 }
-?>

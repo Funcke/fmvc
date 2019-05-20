@@ -11,7 +11,7 @@ namespace Models
     class User extends DataObject
     {
         /**
-         * @var int PRIMARY KEY AUTOINCREMENT
+         * @var integer PRIMARY KEY AUTOINCREMENT
          */
         public $Id;
         /**
