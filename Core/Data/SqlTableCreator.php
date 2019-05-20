@@ -7,6 +7,9 @@ use \ReflectionException;
 
 /**
  * Class SqlTableCreator
+ * Creates Table from class
+ *
+ * @author Jonas Funcke <jonas@funcke.work>
  * @package Core\Data
  */
 class SqlTableCreator

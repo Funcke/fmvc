@@ -1,6 +1,13 @@
 <?php
 namespace Core 
 {
+    /**
+     * Class PageUtils
+     * Contains basic page utilities.
+     *
+     * @author Jonas Funcke <jonas@funcke.work>
+     * @package Core
+     */
     class PageUtils 
     {
         /**

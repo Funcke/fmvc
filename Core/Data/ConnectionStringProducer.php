@@ -3,10 +3,19 @@
 
 namespace Core\Data;
 
-
+/**
+ * Class ConnectionStringProducer
+ * Produces Database connection string
+ * @author Jonas Funcke <jonas@funcke.work>
+ * @package Core\Data
+ */
 class ConnectionStringProducer
 {
-    public static function produce($params) {
+    /**
+     * @param array $params - content from db.json
+     * @return string - the connection string
+     */
+    public static function produce(array $params) : string  {
         $query = '';
         switch($params['protocol']) {
             case 'sqlite': $query = self::produceSqlite($params); break;
