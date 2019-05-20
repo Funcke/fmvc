@@ -14,9 +14,8 @@ namespace Core
             if(file_exists("views/".$name.".php"))
                 require_once("views/base.php");
             else
-                renderErrorPage(array("code"=> 500, "message" => "Could not find template ".$name));
+                PageUtils::renderErrorPage(array("code"=> 500, "message" => "Could not find template ".$name));
             exit();
       }
   }
 }
-?>

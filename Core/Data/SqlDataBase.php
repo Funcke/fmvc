@@ -43,7 +43,7 @@ namespace Core\Data
     /**
      * Executes the given query(<b>SELECT</b>)
      * Made for queries returning Results
-     * @param  string $query the query-string
+     * @param string $query the query-string
      * @return array  result of query in associaitve array
      */
     public function query(string $query): array

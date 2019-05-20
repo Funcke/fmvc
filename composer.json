@@ -9,5 +9,9 @@
             "email": "jonas@funcke.work"
         }
     ],
-    "require": {}
+    "require": {
+      "ext-pdo": "*",
+      "ext-json": "*",
+        "ext-apache": "*"
+    }
 }

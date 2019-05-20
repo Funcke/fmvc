@@ -28,7 +28,7 @@ namespace Core\Data
          * @param string $table string containing the name of the table to operate on
          * @param array $fields containing the fields has to be an array containing field names
          * 
-         * @returns SqlDatabaseQueryBuilder
+         * @return SqlDatabaseQueryBuilder
          */
         public function select(string $table, array $fields): SqlDatabaseQueryBuilder
         {
@@ -51,7 +51,7 @@ namespace Core\Data
          * @param string $table name of the table to operate on
          * @param array $values array containing fields in format 'column' => value
          * 
-         * @returns SqlDatabaseQueryBuilder
+         * @return SqlDatabaseQueryBuilder
          **/
         public function insert(string $table, array $values): SqlDatabaseQueryBuilder
         {
@@ -89,7 +89,7 @@ namespace Core\Data
          * @param string $table string containing name of table to operate on
          * @param array $values associative array containg fields and data in form of 'column' => val
          * 
-         * @returns SqlDatabaseQueryBuilder
+         * @return SqlDatabaseQueryBuilder
          */
         public function update(string $table, array $values): SqlDatabaseQueryBuilder
         {
@@ -110,7 +110,7 @@ namespace Core\Data
          * 
          * @param string $table containing table name
          * 
-         * @returns SqlDatabaseQueryBuilder
+         * @return SqlDatabaseQueryBuilder
          */
         public function delete(string $table): SqlDatabaseQueryBuilder
         {
@@ -127,7 +127,7 @@ namespace Core\Data
          * @param string $operator contains operator
          * @param string $value contains value to be compared to
          * 
-         * @returns SqlDatabaseQueryBuilder
+         * @return SqlDatabaseQueryBuilder
         **/
         public function where(string $key, string $value):SqlDatabaseQueryBuilder
         {
@@ -147,7 +147,7 @@ namespace Core\Data
         /**
          * Returns finished querystring
          * 
-         * @returns string
+         * @return string
          */
         public function build():string
         {

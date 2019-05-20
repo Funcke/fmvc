@@ -27,7 +27,7 @@ namespace Core\Data {
          * 
          * @param array $data associative array representing fields of child-Class to store in form of $field => $value
          * 
-         * @returns int 0 or 1 representing success of operation
+         * @return int 0 or 1 representing success of operation
          */
         protected function store_raw(array $data):int
         {
@@ -36,16 +36,18 @@ namespace Core\Data {
             
             return $this->connection->execute($query);
         }
-        
+
         /**
          * Generates a SELECT statement and executes it on the table representing
          * the current childobject.
-         * 
+         *
          * @param string $name name of the Child-Class and the belonging table
          * @param array $fields containing the identifier of the fields to select
          * @param array $conditions containing the SELECT conditions in form of $field => $expectedVal
-         * 
-         * @returns array with query results or false
+         *
+         *
+         * @return array with query results or false
+         * @throws \Exception
          */
         protected static function get_raw(string $name, array $fields, array $conditions):array
         {
@@ -70,7 +72,7 @@ namespace Core\Data {
          * @param array $conditions associative array containg identifier and expected
          *     value for conditioned fields in form of $field => $value
          * 
-         * @returns int 0 or higher, number of modified fields
+         * @return int 0 or higher, number of modified fields
          */
         protected function update_raw(array $fields, array $conditions = null):int
         {
@@ -95,7 +97,7 @@ namespace Core\Data {
          * @param array $conditions array representing conditions in form of
          *     $field => $value
          * 
-         * @returns int 0 or more, number of deleted entries
+         * @return int 0 or more, number of deleted entries
          */
         protected function delete_raw(array $conditions = null):int
         {
@@ -117,4 +119,3 @@ namespace Core\Data {
         }
     }
 }
-?>

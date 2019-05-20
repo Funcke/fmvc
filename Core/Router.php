@@ -38,7 +38,7 @@ namespace Core
          * Calls registered Middleware and Controller Action
          * @param  String $action     Action used
          * @param  Request $request    Request Object to dispatch
-         * @return none
+         * @return null
          */
         private function dispatchRequest(string $action, Request $request) 
         {
@@ -98,7 +98,7 @@ namespace Core
                         break;
                     }
                 case 'PUT':
-                case 'DELETE': $request->params = json_decode(\file_get_contents('php://input'), true); break;
+                case 'DELETE': $request->params = json_decode(file_get_contents('php://input'), true); break;
             }
         }
     }
