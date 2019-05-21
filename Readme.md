@@ -28,7 +28,7 @@ In _config/routes.php_ the routes of your server are located.
 A route has the format of:
 ```php
 '/path' => [
-  'GET' =>'ExampleController::aciton'
+  'GET' =>'ExampleController::action'
  ]
 ```
 ## Create a view
