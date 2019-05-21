@@ -3,10 +3,25 @@ A small Model-View-Controller framework.
 It aimes heavily on separating code parts to create small, interchangeable components
 
 ## How-To Create a route
-1. Create class extending Controller base-class in _controller_
-2. define routes in config/routes.json just like the examples (attention: identifiers have to be passed as Method parameter and not as URI extension)
-3. just use
+1. Create a class extending Core\Controller
+```PHP
+use Core\Controller;
+public class ExampleController extends Controller {
 
+}
+```
+2. Add a static method recieving a reference to $request. $request resembles the Core\Request Object.
+in this method resigns the task of your request endpoint.
+```PHP
+use Core\Controller;
+use Core\Request;
+
+public class ExampleController extends Controller {
+ public static function action(&$request) {
+  echo "<h1>Hello World</h1>";
+ }
+}
+```
 ## Create a view
 1. create a php file with content to be displayed in _views_
 2. edit base.php as you like. It resembles the basic page layout
