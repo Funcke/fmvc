@@ -23,6 +23,14 @@ public class ExampleController extends Controller {
  }
 }
 ```
+3. add the aciton to a route
+In _config/routes.php_ the routes of your server are located.
+A route has the format of:
+```php
+'/path' => [
+  'GET' =>'ExampleController::aciton'
+ ]
+```
 ## Create a view
 1. create a php file with content to be displayed in _views_
 2. edit base.php as you like. It resembles the basic page layout
