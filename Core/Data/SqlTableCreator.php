@@ -31,11 +31,11 @@ class SqlTableCreator
      */
     private static function generateQuery($name): string {
         $reflector = new ReflectionClass($name);
-        $table = explode('*/', explode('@table ', $reflector->getDocComment())[1])[0];
+        $table = explode('*', explode('@table ', $reflector->getDocComment())[1])[0];
         $fields = array_keys(get_class_vars($name));
         $types = array();
         foreach($fields as $field) {
-            $types[$field] = explode('*/', explode('@var ', $reflector->getProperty($field)->getDocComment())[1])[0];
+            $types[$field] = explode('*', explode('@var ', $reflector->getProperty($field)->getDocComment())[1])[0];
         }
         $query = "CREATE TABLE " . $table . "(";
         foreach($types as $name => $type) {
