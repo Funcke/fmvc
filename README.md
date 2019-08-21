@@ -49,7 +49,7 @@ FMVC contains a small object relational mapper. With it you can store, read, upd
 
 * How to structure the connection information
 
-```text
+```javascript
 {
  "default": {
   "protocol": "mysql",
@@ -66,7 +66,7 @@ Supported databases are: MySQL, SQLite, Microsoft SQL Server, PostgreSQL. The co
 
 * Create an object the mapper can map
 
-```text
+```php
 use Core\Data\DataObject;
     /**
      * Class User
