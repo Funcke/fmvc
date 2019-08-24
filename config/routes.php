@@ -2,7 +2,7 @@
   return [
     'base_url' => '/', #please do only add subfolders
     '' => [
-      'GET' =>'IndexController::index'
+      'GET' =>'ProfileController::test'
     ],
     'authenticate' => [
       'POST' => 'AuthenticationController::new',
