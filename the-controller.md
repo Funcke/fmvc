@@ -1,6 +1,6 @@
-# The Controller
+# The Controller 🎮
 
-## Up and Running
+## Up and Running 👟
 
 Every route you specify in your application will end in the static method of a controller. Controller are PHP classes that are derived from the `Core/Controller` base class.
 
