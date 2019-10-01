@@ -4,7 +4,7 @@
  */
 $content = "<?php\n"
 ."use Core\\Controller;\n"
-."class ".$argv[3]." extends Controller\n {\n\n"
+."class ".$argv[3]."Controller extends Controller\n {\n\n"
 ."}";
 file_put_contents(getcwd()."/Controller/".$argv[3]."Controller.php", $content);
 echo "Created ".$argv[3]."Controller\n";

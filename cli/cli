@@ -5,17 +5,6 @@
  */
 if($argv[1] == 'new') {
     require_once('new.php');
-    /*if ($argv[3] == '--react') {
-        copy($location.'/cli/deployments/react.json', $argv[2].'/package.json');
-        chdir($argv[2]);
-        exec('npm i create-react-app');
-        exec('create-react-app Frontend');
-    } else if ($argv[3] == '--angular') {
-        copy($location.'/cli/deployments/angular.json', $argv[2].'/package.json');
-        exec('cd '.$argv[2].' && npm install -g --save @angular/cli && ng new Frontend');
-    } else {
-        copy($location.'/deployments/plain.json', $argv[2].'/package.json');
-    }*/
 } else if($argv[1] == 'run') {
     /*$lines = json_decode(file_get_contents('package.json'));
     exec($lines['scripts']['start']);*/
