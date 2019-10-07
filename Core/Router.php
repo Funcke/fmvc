@@ -75,6 +75,7 @@ namespace Core
                 if(array_key_exists($_SERVER["REQUEST_METHOD"], $this->routes[$request->uri])) 
                 {
                     $request->action = $this->routes[$request->uri][$_SERVER["REQUEST_METHOD"]];
+                    $request->method = $_SERVER["REQUEST_METHOD"];
                     $this->getRequestParams($request);
                 } 
                 else 

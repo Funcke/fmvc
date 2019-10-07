@@ -9,14 +9,15 @@
             "email": "jonas@funcke.work"
         }
     ],
-    "require": {
-      "php": "^7.2",
-      "ext-pdo": "*",
-      "ext-json": "*",
-      "ext-apache": "*",
-      "ext-sqlite3": "*",
-      "ext-mysqli": "*",
-      "ext-mssql": "*",
-      "ext-mongodb": "*"
+    "require-dev": {
+        "phpunit/phpunit": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "Controller\\": "Controller/",
+            "Core\\": "Core/",
+            "Middleware\\": "Middleware/",
+            "Models\\": "Models"
+        }
     }
 }
