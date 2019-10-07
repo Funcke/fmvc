@@ -17,3 +17,4 @@ Models/
 \.idea/misc\.xml
 file\.db
 config/
+vendor/
