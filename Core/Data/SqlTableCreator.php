@@ -2,6 +2,8 @@
 
 
 namespace Core\Data;
+
+use Core\Data\QueryBuilder\SQLQueryBuilderFactory;
 use \ReflectionClass;
 use \ReflectionException;
 
@@ -17,11 +19,12 @@ class SqlTableCreator
 
     /** Creates Database Table
      * @param String $name
+     * @param string $dialect
      * @return string $query
      * @throws ReflectionException
      */
-    public static function create(String $name) {
-        return self::generateQuery($name);
+    public static function create(String $name, string $dialect) {
+        return self::generateQuery($name, $dialect);
     }
 
     /** generates the CREATE statement from the PHPDoc in Entity Class
@@ -29,7 +32,7 @@ class SqlTableCreator
      * @return string - the SQL Query
      * @throws ReflectionException
      */
-    private static function generateQuery($name): string {
+    private static function generateQuery(string $name, string $dialect): string {
         $reflector = new ReflectionClass($name);
         $table = explode('*', explode('@table ', $reflector->getDocComment())[1])[0];
         $fields = array_keys(get_class_vars($name));
@@ -37,10 +40,7 @@ class SqlTableCreator
         foreach($fields as $field) {
             $types[$field] = explode('*', explode('@var ', $reflector->getProperty($field)->getDocComment())[1])[0];
         }
-        $query = "CREATE TABLE " . $table . "(";
-        foreach($types as $name => $type) {
-            $query .= $name.' '.$type.',';
-        }
-        return substr($query, 0, -1) . ')';
+        $query = (SQLQueryBuilderFactory::generate($dialect))->create($table, $types)->build();
+        return $query;
     }
 }

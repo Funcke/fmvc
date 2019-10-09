@@ -18,6 +18,8 @@ namespace Core\Data
          */
         private $connection;
 
+        public $dialect;
+
         /**
          * c'tor
          * @param string $connection name of the connection configuration to open
@@ -29,6 +31,7 @@ namespace Core\Data
             $params = json_decode(file_get_contents('./config/db.json'), true);
             $query = ConnectionStringProducer::produce($params[$connection]);
             $this->connection = new PDO($query, $params[$connection]['username'], $params[$connection]['password']);
+            $this->dialect = $params[$connection]['protocol'];
             if($this->connection == false) 
             {
                 throw new \Exception('An error occured while connection to the databse!');

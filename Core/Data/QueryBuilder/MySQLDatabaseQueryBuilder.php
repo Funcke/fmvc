@@ -1,13 +1,13 @@
 <?php
 
-namespace Core\Data
+namespace Core\Data\QueryBuilder
 {
     /**
      * Builder providing an easy to use api for creating CRUD SQL commands
      * 
      * @author Jonas Funcke <jonas@funcke.work>
      */
-    class SqlDatabaseQueryBuilder
+    class MySQLDatabaseQueryBuilder implements SQLDatabaseQueryBuilder
     {
         private $query;
         private $conditions;
@@ -23,6 +23,20 @@ namespace Core\Data
         
         
         /**
+         * 
+         */
+        public function create(string $table, array $fields): SQLDatabaseQueryBuilder
+        {
+            $this->query = 'Create Table '.$table."(";
+            foreach($fields as $field => $meta) {
+                $this->query .= $field.' '.$meta.',';
+            }
+            $this->query = substr($this->query, 0, -1) . ')';
+            $this->query = str_replace(' AUTOINCREMENT', ' AUTO_INCREMENT', $this->query);
+            return $this;
+        }
+
+        /**
          * Creates basic select statement without any conditions
          * 
          * @param string $table string containing the name of the table to operate on
@@ -30,7 +44,7 @@ namespace Core\Data
          * 
          * @return SqlDatabaseQueryBuilder
          */
-        public function select(string $table, array $fields): SqlDatabaseQueryBuilder
+        public function select(string $table, array $fields): SQLDatabaseQueryBuilder
         {
             $this->query = 'SELECT ';
             $this->conditions = 0;
@@ -53,7 +67,7 @@ namespace Core\Data
          * 
          * @return SqlDatabaseQueryBuilder
          **/
-        public function insert(string $table, array $values): SqlDatabaseQueryBuilder
+        public function insert(string $table, array $values): SQLDatabaseQueryBuilder
         {
             $this->query = 'INSERT INTO '.$table.'(';
             $this->conditions = 0;
@@ -89,7 +103,7 @@ namespace Core\Data
          * 
          * @return SqlDatabaseQueryBuilder
          */
-        public function update(string $table, array $values): SqlDatabaseQueryBuilder
+        public function update(string $table, array $values): SQLDatabaseQueryBuilder
         {
             $this->query = 'UPDATE '.$table.' ';
             $this->conditions = 0;
@@ -127,7 +141,7 @@ namespace Core\Data
          * 
          * @return SqlDatabaseQueryBuilder
         **/
-        public function where(string $key, string $value):SqlDatabaseQueryBuilder
+        public function where(string $key, string $value):SQLDatabaseQueryBuilder
         {
             if($this->conditions == 0)
             {
@@ -137,7 +151,7 @@ namespace Core\Data
                 $this->query .= ' AND ';
             }
             
-            $this->query .= $key.'='.$value;
+            $this->query .= $key."='".$value."'";
             
             return $this;
         }

@@ -9,7 +9,7 @@ namespace Core
      */
     class Controller 
     {
-        public static function render($name, $params) 
+        public static function render(string $name, Request $request, array $params) 
         {
             if(file_exists("views/".$name.".php"))
                 require_once("views/base.php");
