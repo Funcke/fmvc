@@ -10,5 +10,5 @@ FMVC provides models, you may know this from other packages such as ActiveModel 
 
 ### Yes, but how can I do that?
 
-So at first, we have like a base class. `Core/Data/DataObject`
+So at first, we have like a base class. `Core\Data\DataObject` This Base class is hold the basic methods to read, write, update and delete your models. 
 
