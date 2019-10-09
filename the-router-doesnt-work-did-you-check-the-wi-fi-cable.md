@@ -30,3 +30,5 @@ The key base\_url is being used, if the files are stored in subfolders or the ap
 
 How such a controller implementation looks will get its own chapter.
 
+{% page-ref page="the-controller.md" %}
+

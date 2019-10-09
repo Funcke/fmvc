@@ -4,10 +4,6 @@
 
 Every route you specify in your application will end in the static method of a controller. Controller are PHP classes that are derived from the `Core/Controller` base class.
 
-```
-$ give me super-powers
-```
-
 This will look something like this:
 
 ```php
@@ -27,6 +23,7 @@ class MyController extends Controller {
     public static function handler(&$request) {
          self::render(
               'profile/index', 
+              $request,
               array(
               'title' => 'Profile', 
               'user' => $request->session['user'])
@@ -38,7 +35,7 @@ class MyController extends Controller {
 Here we utilized a method already provided by the `Core/Controller` parent class:
 
 ```php
-render(string $template, array $params);
+render(string $template, Request $request, array $params);
 ```
 
 It takes the path to the template to render and an array with variables that should be available in the template.

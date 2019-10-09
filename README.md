@@ -6,3 +6,5 @@ FMVC is a MVC framework for PHP apps. As other frameworks often seemed to big fo
 
 But it was/is fun to develop. So if you want to try it: enjoy!
 
+{% page-ref page="the-router-doesnt-work-did-you-check-the-wi-fi-cable.md" %}
+
