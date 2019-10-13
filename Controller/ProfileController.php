@@ -20,7 +20,7 @@ class ProfileController extends Controller
     
     public static function view($request)
     {
-        self::render('profile/index', array('title' => 'Profile', 'user' => $request->session['user']));
+        self::render('profile/index', $request, array('title' => 'Profile', 'user' => $request->session['user']));
     }
     
     public static function follow($request)
@@ -32,6 +32,6 @@ class ProfileController extends Controller
     {
         #$base = new SqlDataBase();
         #$base->execute(SqlTableCreator::create('Models\User'));
-        print SqlTableCreator::create('Models\User');
+        print SqlTableCreator::create('Models\User', 'mysql');
     }
 }

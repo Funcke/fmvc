@@ -16,13 +16,6 @@ namespace Core
         public $method;
         public $headers;
         public $session;
-
-        public function __construct() 
-        {
-            $this->uri = explode("?", $_SERVER["REQUEST_URI"])[0];
-
-            $this->headers = getallheaders();
-            $this->session = &$_SESSION;
-        }
+        public $cookies;
     }
 }

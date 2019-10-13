@@ -1,6 +1,8 @@
 <?php
 namespace Core 
 {
+
+    use Core\Environment\EnvironmentAdapter;
     use Core\PageUtils;
 
     /**
@@ -12,14 +14,16 @@ namespace Core
         // contains content of config/routes.json
         private $routes;
         private $middleware;
+        private $environment;
 
         /**
          * Constructor
          */
-        public function __construct() 
+        public function __construct(EnvironmentAdapter &$environment, array $routes, array $middleware) 
         {
-            $this->routes = require_once('config/routes.php');
-            $this->middleware = require_once('config/middleware.php');
+            $this->routes = $routes;
+            $this->middleware = $middleware;
+            $this->environment = $environment;
         }
 
         /**
@@ -40,7 +44,7 @@ namespace Core
          * @param  Request $request    Request Object to dispatch
          * @return null
          */
-        private function dispatchRequest(string $action, Request $request) 
+        private function dispatchRequest(string $action, Request &$request) 
         {
             foreach($this->middleware as $key => $val)
             {
@@ -61,8 +65,9 @@ namespace Core
          * prepares Request for exection.
          * Checks if request methods match and if route is converted
          */
-        private function prepareRequest(Request $request) 
+        private function prepareRequest(Request &$request) 
         {
+            $request->uri = explode("?", $this->environment->server()["REQUEST_URI"])[0];
             $base_url = array_key_exists("base_url", $this->routes)? $this->routes['base_url'] : '/';
             $request->uri = explode($base_url, $request->uri)[1];
 
@@ -72,11 +77,9 @@ namespace Core
             } 
             else 
             {
-                if(array_key_exists($_SERVER["REQUEST_METHOD"], $this->routes[$request->uri])) 
+                if(array_key_exists($this->environment->server()["REQUEST_METHOD"], $this->routes[$request->uri])) 
                 {
-                    $request->action = $this->routes[$request->uri][$_SERVER["REQUEST_METHOD"]];
-                    $request->method = $_SERVER["REQUEST_METHOD"];
-                    $this->getRequestParams($request);
+                    $this->initializeRequest($request);
                 } 
                 else 
                 {
@@ -88,19 +91,29 @@ namespace Core
         /**
          * extracts request parameters and adds them to the request object
          */
-        private function getRequestParams(Request $request) 
+        private function getRequestParams(Request &$request) 
         {
-            switch($_SERVER["REQUEST_METHOD"]) 
+            switch($this->environment->server()["REQUEST_METHOD"]) 
             {
-                case 'GET': $request->params = array_replace([], $_GET); break;
+                case 'GET': $request->params = array_replace([], $this->environment->get()); break;
                 case 'POST': 
-                    if($_SERVER["CONTENT_TYPE"] == "multipart/form-data" || $_SERVER["CONTENT_TYPE"] == "application/x-www-form-urlencoded"){
-                        $request->params = array_replace([], $_POST); 
+                    if($this->environment->server()["CONTENT_TYPE"] == "multipart/form-data" || $this->environment->server()["CONTENT_TYPE"] == "application/x-www-form-urlencoded"){
+                        $request->params = array_replace([], $this->environment->post()); 
                         break;
                     }
                 case 'PUT':
                 case 'DELETE': $request->params = json_decode(file_get_contents('php://input'), true); break;
             }
+        }
+
+        private function initializeRequest(Request &$request)
+        {
+            $request->headers = $this->environment->headers();
+            $request->session = $this->environment->session();
+            $request->cookies = $this->environment->cookies();
+            $request->action = $this->routes[$request->uri][$this->environment->server()["REQUEST_METHOD"]];
+            $request->method = $this->environment->server()["REQUEST_METHOD"];
+            $this->getRequestParams($request);
         }
     }
 }

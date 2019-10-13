@@ -9,8 +9,8 @@ final class RouterTest extends TestCase {
     public function testLeadsToCorrectRoute(): void
     {
         $request = new Request();
-        $router = new Router();
-        $router->handleRequest($request);
+        //$router = new Router();
+        //$router->handleRequest($request);
         print_r($request);
         assert(true);
     }
