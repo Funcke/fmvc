@@ -8,7 +8,7 @@ namespace Core\Data
      * 
      * @author Jonas Funcke <jonas@funcke.work>
      */
-    class DataObject extends SqlTable
+    abstract class DataObject extends SqlTable
     {
         /**
          * DataObject constructor.
