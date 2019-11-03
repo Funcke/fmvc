@@ -65,7 +65,8 @@ class SqlTable
     {
         $connection = new SqlDataBase();
         $builder= SQLQueryBuilderFactory::generate($connection->dialect);
-        $builder->select($name, $fields);
+        $parts = explode('\\', $name);
+        $builder->select((sizeof($parts) > 1 ? $parts[1] : $parts[0]), $fields);
         foreach($conditions as $field => $value)
         {
             $builder->where($field, $value);

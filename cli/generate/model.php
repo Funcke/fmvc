@@ -8,7 +8,7 @@ $content = "<?php\n"
 ."  /**\n"
 ."  * @var integer PRIMARY KEY AUTOINCREMENT\n"
 ."  */\n"
-."  public $Id\n"
+."  public $id\n"
 ."}";
 file_put_contents(getcwd()."/Models/".$argv[3].".php", $content);
 echo "Created ".$argv[3]."\n";

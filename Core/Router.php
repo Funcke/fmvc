@@ -102,7 +102,7 @@ namespace Core
                         break;
                     }
                 case 'PUT':
-                case 'DELETE': $request->params = json_decode(file_get_contents('php://input'), true); break;
+                case 'DELETE': parse_str(file_get_contents('php://input'), $request->params); break;
             }
         }
 

@@ -29,7 +29,7 @@ class User extends DataObject
     /**
      * @var integer PRIMARY KEY AUTOINCREMENT
      */
-    public $Id;
+    public $id;
     /**
      * @var VARCHAR(50)
      */

@@ -73,20 +73,17 @@ namespace Core\Data\QueryBuilder
             $this->conditions = 0;
             foreach(array_keys($values) as $val)
             {
-                if($val != 'Id'){
+                if(!is_null($values[$val])){
                     $this->query .= $val.', '; 
                 }
             }
             
             $this->query = substr($this->query, 0, -2);
             $this->query .= ')VALUES(';
-            $skipped = false;
             foreach(array_values($values) as $val)
             {
-                if($skipped)
+                if(!is_null($val))
                     $this->query .= '"'.$val.'", ';
-                else
-                    $skipped = true;
             }
             
             $this->query = substr($this->query, 0, -2);

@@ -17,7 +17,7 @@ namespace Core\Data
         function __construct()
         {
             $fullName = get_class($this);
-            parent::__construct(explode('\\', $fullName)[1], SqlTableCreator::create($fullName));
+            parent::__construct(explode('\\', $fullName)[1]);
         }
 
         /**
@@ -46,12 +46,7 @@ namespace Core\Data
             if(!is_null($res) && !empty($res))
             {
                 $res = $res[0];
-                $ret = new $class();
-                foreach($res as $key => $val)
-                {
-                    $ret->$key = $val;
-                }
-                return $ret;
+                return self::generate_object($class, $res);
             } else {
                 return null;
             }
@@ -63,27 +58,41 @@ namespace Core\Data
          * @return array
          * @throws \Exception
          */
-        public static function find($arr):array
+        public static function find($arr)
         {
             $class = get_called_class();
             $res = parent::get_raw(
                 explode('\\', $class)[1],
                 array_keys(get_object_vars(new $class())),
                 $arr);
-                
-            if(!is_null($res))
+            if(!is_null($res) && !empty($res))
             {
                 $results = [];
                 foreach($res as $entity)
                 {
-                    $et = new $class();
-                    foreach($entity as $field => $value)
-                    {
-                        $et->$field = $value;
-                    }
-                    array_push($results, $et);
+                    array_push($results, self::generate_object($class, $entity));
                 }
-                
+                return $results;
+            } else {
+                return null;
+            }
+        }
+        
+        public static function all()
+        {
+            $class = get_called_class();
+            $res = parent::get_raw(
+                explode('\\', $class)[1],
+                array_keys(get_object_vars(new $class())),
+                array('1' => '1')
+            );
+            if(!is_null($res) && !empty($res))
+            {
+                $results = [];
+                foreach($res as $entity)
+                {
+                    array_push($results, self::generate_object($class, $entity));
+                }
                 return $results;
             } else {
                 return null;
@@ -95,7 +104,7 @@ namespace Core\Data
          */
         public function update():int
         {
-            return parent::update_raw(get_object_vars($this), array('id' => $this->Id));
+            return parent::update_raw(get_object_vars($this), array('id' => $this->id));
         }
 
         /**
@@ -104,7 +113,17 @@ namespace Core\Data
          */
         public function delete():int
         {
-            return parent::delete_raw(array('id' => $this->Id));
+            return parent::delete_raw(array('id' => $this->id));
+        }
+
+        private static function generate_object(string $class, array $properties)
+        {
+            $ret = new $class();
+            foreach($properties as $key => $val)
+            {
+                $ret->$key = $val;
+            }
+            return $ret;
         }
     }
 }

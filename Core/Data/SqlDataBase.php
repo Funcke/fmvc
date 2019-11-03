@@ -30,7 +30,7 @@ namespace Core\Data
         {
             $params = json_decode(file_get_contents('./config/db.json'), true);
             $query = ConnectionStringProducer::produce($params[$connection]);
-            $this->connection = new PDO($query, $params[$connection]['username'], $params[$connection]['password']);
+            $this->connection = new PDO($query, $params[$connection]['username'], $params[$connection]['password'], array(PDO::ATTR_PERSISTENT => TRUE));
             $this->dialect = $params[$connection]['protocol'];
             if($this->connection == false) 
             {
