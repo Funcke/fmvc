@@ -1,3 +1,4 @@
+[![CircleCI](https://circleci.com/gh/Funcke/fmvc/tree/master.svg?style=svg)](https://circleci.com/gh/Funcke/fmvc/tree/master)
 # Introduction
 
 ### What is FMVC?
