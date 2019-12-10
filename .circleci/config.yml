@@ -27,7 +27,7 @@ jobs:
       - run: touch "test/db/canConnectToDb.db"
       - run: touch "test/db/throwsExceptionForInvalidQuery.db"
       - run: touch "test/db/returnsArrayFromValidQuery.db"
-      - run: touch 
+      - run: touch "test/db/returnsZeroIfExecuteWasNotSuccessful.db"
 
       # Download and cache dependencies
       - restore_cache:
