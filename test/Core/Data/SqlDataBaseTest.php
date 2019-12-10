@@ -10,7 +10,7 @@ final class SqlDataBaseTest extends TestCase {
     {
         $thrown = false;
         try {
-            $db = new SqlDataBase("", array("protocol" => "sqlite", "host" => "test/db/".uniqid().".db", "username" => "", "password" => ""));
+            $db = new SqlDataBase("", array("protocol" => "sqlite", "host" => "test/db/canConnectToDb.db", "username" => "", "password" => ""));
         } catch(Exception $e) {
             $thrown = true;
         }
@@ -20,7 +20,7 @@ final class SqlDataBaseTest extends TestCase {
 
     public function testThrowsExceptionForInvalidQuery(): void 
     {
-        $db = new SqlDataBase("", array("protocol" => "sqlite", "host" => "test/db/".uniqid().".db", "username" => "", "password" => ""));
+        $db = new SqlDataBase("", array("protocol" => "sqlite", "host" => "test/db/throwsExceptionForInvalidQuery.db", "username" => "", "password" => ""));
         $thrown = false;
         try {
             $db->query("penis");
@@ -33,7 +33,7 @@ final class SqlDataBaseTest extends TestCase {
 
     public function testReturnsArrayFromValidQuery(): void 
     {
-        $db = new SqlDataBase("", array("protocol" => "sqlite", "host" => "test/db/".uniqid().".db", "username" => "", "password" => ""));
+        $db = new SqlDataBase("", array("protocol" => "sqlite", "host" => "test/db/returnsArrayFromValidQuery.db", "username" => "", "password" => ""));
         $db->execute("CREATE TABLE test(input varchar(50))");
         $thrown = false;
         try {
@@ -48,7 +48,7 @@ final class SqlDataBaseTest extends TestCase {
 
     public function testReturnsZeroIfExecuteWasNotSuccessful() : void 
     {
-        $db = new SqlDataBase("", array("protocol" => "sqlite", "host" => "test/db/".uniqid().".db", "username" => "", "password" => ""));
+        $db = new SqlDataBase("", array("protocol" => "sqlite", "host" => "test/db/returnsZeroIfExecuteWasNotSuccessful.db", "username" => "", "password" => ""));
         $db->execute("CREATE TABLE test(input varchar(50))");
         $res = $db->execute("INSERT INTO test(input, id) VALUES('69', 23)");
         $this->assertEquals($res, false);
