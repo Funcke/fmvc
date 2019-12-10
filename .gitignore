@@ -18,3 +18,4 @@ Models/
 file\.db
 config/
 vendor/
+test/db/

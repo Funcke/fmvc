@@ -29,10 +29,10 @@ namespace Core\Data
         function __construct(string $connection = 'default', array $params = array()) 
         {
             if(empty($params))
-                $params = json_decode(file_get_contents('./config/db.json'), true);
-            $query = ConnectionStringProducer::produce($params[$connection]);
-            $this->connection = new PDO($query, $params[$connection]['username'], $params[$connection]['password'], array(PDO::ATTR_PERSISTENT => TRUE));
-            $this->dialect = $params[$connection]['protocol'];
+                $params = json_decode(file_get_contents('./config/db.json'), true)[$connection];
+            $query = ConnectionStringProducer::produce($params);
+            $this->connection = new PDO($query, $params['username'], $params['password'], array(PDO::ATTR_PERSISTENT => TRUE));
+            $this->dialect = $params['protocol'];
             if($this->connection == false) 
             {
                 throw new \Exception('An error occured while connection to the databse!');
@@ -58,7 +58,7 @@ namespace Core\Data
             
             return $arr;
         } else {
-            return [];
+            throw new \PDOException("Invalid SQL Query: ".$query);
         }
     }
 
@@ -67,6 +67,7 @@ namespace Core\Data
      * Made for queries returning a int or boolean
      * @param  string $command Query
      * @return int             success information
+     * @throws PDOException
      */
     public function execute(string $command):int
     {
