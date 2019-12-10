@@ -16,8 +16,8 @@ namespace Core\Data
          */
         function __construct()
         {
-            $fullName = get_class($this);
-            parent::__construct(explode('\\', $fullName)[1]);
+            $fullName = get_called_class();
+            parent::__construct($fullName);
         }
 
         /**
@@ -40,7 +40,7 @@ namespace Core\Data
             $class = get_called_class();
             
             $res = parent::get_raw(
-                explode('\\', $class)[1],
+                $class,
                 array_keys(get_object_vars(new $class())), 
                 array('id' => $id));
             if(!is_null($res) && !empty($res))
@@ -62,7 +62,7 @@ namespace Core\Data
         {
             $class = get_called_class();
             $res = parent::get_raw(
-                explode('\\', $class)[1],
+                $class,
                 array_keys(get_object_vars(new $class())),
                 $arr);
             if(!is_null($res) && !empty($res))
@@ -74,7 +74,7 @@ namespace Core\Data
                 }
                 return $results;
             } else {
-                return null;
+                return [];
             }
         }
         
@@ -82,7 +82,7 @@ namespace Core\Data
         {
             $class = get_called_class();
             $res = parent::get_raw(
-                explode('\\', $class)[1],
+                $class,
                 array_keys(get_object_vars(new $class())),
                 array('1' => '1')
             );
@@ -95,7 +95,7 @@ namespace Core\Data
                 }
                 return $results;
             } else {
-                return null;
+                return [];
             }
         }
 

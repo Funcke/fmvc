@@ -5,7 +5,7 @@ views/
 Controller/
 Middleware/
 Models/
-./file.db
+*.db
 \.idea/php\.xml
 \.idea/vcs\.xml
 \.idea/modules\.xml

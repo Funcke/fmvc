@@ -26,9 +26,10 @@ namespace Core\Data
          * @throws \PDOException if connection to DB fails
          * @throws \Exception if connection could not be opened
          */
-        function __construct(string $connection = 'default') 
+        function __construct(string $connection = 'default', array $params = array()) 
         {
-            $params = json_decode(file_get_contents('./config/db.json'), true);
+            if(empty($params))
+                $params = json_decode(file_get_contents('./config/db.json'), true);
             $query = ConnectionStringProducer::produce($params[$connection]);
             $this->connection = new PDO($query, $params[$connection]['username'], $params[$connection]['password'], array(PDO::ATTR_PERSISTENT => TRUE));
             $this->dialect = $params[$connection]['protocol'];

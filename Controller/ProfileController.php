@@ -30,8 +30,8 @@ class ProfileController extends Controller
 
     public static function showUserStruct($request)
     {
-        #$base = new SqlDataBase();
-        #$base->execute(SqlTableCreator::create('Models\User'));
-        print SqlTableCreator::create('Models\User', 'mysql');
+        (new User())->store();
+        print_r(User::all());
+        //print SqlTableCreator::create('Models\User', 'mysql');
     }
 }

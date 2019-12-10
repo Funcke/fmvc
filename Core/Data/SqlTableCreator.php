@@ -43,4 +43,15 @@ class SqlTableCreator
         $query = (SQLQueryBuilderFactory::generate($dialect))->create($table, $types)->build();
         return $query;
     }
+    
+    /**
+     * provides table name annotated in @table phpdoc comment above class definition of the provided class.
+     * @param $classname String - name in format (namespace\class) of the targeted class
+     * @return string - name of the class
+     * @throws ReflectionException
+     */
+    public static function getTableName(string $className): string {
+        $reflector = new ReflectionClass($className);
+        return explode('*', explode('@table ', $reflector->getDocComment())[1])[0];
+    }
 }

@@ -9,7 +9,7 @@ use Core\Data\QueryBuilder\SQLQueryBuilderFactory;
  * 
  * @author Jonas Funcke <jonas@funcke.work>
  */
-class SqlTable 
+abstract class SqlTable 
 {
     private $connection;
     private $name;
@@ -25,10 +25,10 @@ class SqlTable
     {
         if(is_null($name))
             throw new \Exception('SqlTable has to have a name!!');
-        $this->connection = new SqlDataBase();
+        $env = (array_key_exists('env', $_ENV)? $_ENV['env']: 'default');
+        $this->connection = new SqlDataBase($env);
         $this->name = $name;
         if(empty($this->connection->execute("SELECT 1 FROM " . $name))){
-            echo SqlTableCreator::create($name, $this->connection->dialect);
             $this->connection->execute(SqlTableCreator::create($name, $this->connection->dialect));
         }
     }
@@ -44,8 +44,7 @@ class SqlTable
     protected function store_raw(array $data):int
     {
         $builder = SQLQueryBuilderFactory::generate($this->connection->dialect);
-        $query = $builder->insert($this->name, $data)->build();
-        
+        $query = $builder->insert(SqlTableCreator::getTableName($this->name), $data)->build();
         return $this->connection->execute($query);
     }
 
@@ -63,10 +62,10 @@ class SqlTable
      */
     protected static function get_raw(string $name, array $fields, array $conditions):array
     {
-        $connection = new SqlDataBase();
+        $env = (array_key_exists('env', $_ENV)? $_ENV['env']: 'default');
+        $connection = new SqlDataBase($env);
         $builder= SQLQueryBuilderFactory::generate($connection->dialect);
-        $parts = explode('\\', $name);
-        $builder->select((sizeof($parts) > 1 ? $parts[1] : $parts[0]), $fields);
+        $builder->select(SqlTableCreator::getTableName($name), $fields);
         foreach($conditions as $field => $value)
         {
             $builder->where($field, $value);
@@ -90,7 +89,7 @@ class SqlTable
     protected function update_raw(array $fields, array $conditions = null):int
     {
         $builder = SQLQueryBuilderFactory::generate($this->connection->dialect);
-        $builder->update($this->name, $fields);
+        $builder->update(SqlTableCreator::getTableName($this->name), $fields);
         if(!is_null($fields))
         {
             foreach($conditions as $field => $value)
@@ -115,7 +114,7 @@ class SqlTable
     protected function delete_raw(array $conditions = null):int
     {
         $builder = SQLQueryBuilderFactory::generate($this->connection->dialect);
-        $builder->delete($this->name);
+        $builder->delete(SqlTableCreator::getTableName($this->name));
         $query = '';
         if($conditions != null)
         {
