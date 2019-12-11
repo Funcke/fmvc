@@ -2,8 +2,7 @@ language: php
 php:
   - 7.3
 before_script:
-  - composer self-update
-  - composer install
+  - composer update -o
 
 script: phpunit test
 
