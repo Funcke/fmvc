@@ -27,10 +27,21 @@ mkdir($argv[2] . '/Core/Data');
 copy($location . '/Core/Data/ConnectionStringProducer.php', $argv[2] . '/Core/Data/ConnectionStringProducer.php');
 copy($location . '/Core/Data/DataObject.php', $argv[2] . '/Core/Data/DataObject.php');
 copy($location . '/Core/Data/SqlDataBase.php', $argv[2] . '/Core/Data/SqlDataBase.php');
-copy($location . '/Core/Data/SqlDatabaseQueryBuilder.php', $argv[2] . '/Core/Data/SqlDatabaseQueryBuilder.php');
+mkdir($argv[2] . '/Core/Data/QueryBuilder');
+copy($location . '/Core/Data/QueryBuilder/SQLDatabaseQueryBuilder.php', $argv[2] . '/Core/Data/QueryBuilder/SqlDatabaseQueryBuilder.php');
+copy($location . '/Core/Data/QueryBuilder/MySQLDatabaseQueryBuilder.php', $argv[2] . '/Core/Data/QueryBuilder/MySQLDatabaseQueryBuilder.php');
+copy($location . '/Core/Data/QueryBuilder/SQLiteDatabaseQueryBuilder.php', $argv[2] . '/Core/Data/QueryBuilder/SQLiteDatabaseQueryBuilder.php');
+copy($location . '/Core/Data/QueryBuilder/SQLQueryBuilderFactory.php', $argv[2] . '/Core/Data/QueryBuilder/SQLQueryBuilderFactory.php');
 copy($location . '/Core/Data/SqlTable.php', $argv[2] . '/Core/Data/SqlTable.php');
 copy($location . '/Core/Data/SqlTableCreator.php', $argv[2] . '/Core/Data/SqlTableCreator.php');
 
+mkdir($argv[2] . '/Core/Environment');
+copy($location . '/Core/Environment/EnvironmentAdapter.php', $argv[2] . '/Core/Environment/EnvironmentAdapter.php');
+copy($location . '/Core/Environment/ProductionEnvironmentAdapter.php', $argv[2] . '/Core/Environment/ProductionEnvironmentAdapter.php');
+
+mkdir($argv[2] . '/Core/Testing');
+copy($location . '/Core/Testing/TestEnvironmentAdapter.php', $argv[2] . '/Core/Testing/TestEnvironmentAdapter.php');
+copy($location . '/Core/Testing/TestingRouter.php', $argv[2] . '/Core/Testing/TestingRouter.php');
 // initialize middleware directory
 mkdir($argv[2] . '/Middleware');
 

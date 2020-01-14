@@ -15,6 +15,7 @@ class TestingRouter {
 
     public function get(string $route, array $body, array $headers = array()):TestingRouter {
         $this->client = new Router(new TestEnvironmentAdapter($route, 'GET', '', $body, NULL, NULL, NULL, $headers), $this->routes, $this->middleware);
+        $this->client->handle();
         return this;
     }
 }
