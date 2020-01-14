@@ -68,8 +68,10 @@ namespace Core
         private function prepareRequest(Request &$request) 
         {
             $request->uri = explode("?", $this->environment->server()["REQUEST_URI"])[0];
-            $base_url = array_key_exists("base_url", $this->routes)? $this->routes['base_url'] : '/';
-            $request->uri = explode($base_url, $request->uri)[1];
+            if(array_key_exists("base_url", $this->routes))
+                $request->uri = explode($base_url, $request->uri)[1];
+            else
+                $request->uri = \substr($request->uri, 1);
 
             if(!array_key_exists($request->uri, $this->routes)) 
             {
