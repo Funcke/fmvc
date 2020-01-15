@@ -72,7 +72,7 @@ namespace Core\Data\QueryBuilder
             $this->conditions = 0;
             foreach(array_keys($values) as $val)
             {
-                if($val != 'Id'){
+                if($val != 'id'){
                     $this->query .= $val.', '; 
                 }
             }
