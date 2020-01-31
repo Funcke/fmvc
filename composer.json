@@ -9,6 +9,10 @@
             "email": "jonas@funcke.work"
         }
     ],
+    "minimum-stability": "dev",
+    "require": {
+        "funcke/dry_php": "*"
+    },
     "require-dev": {
         "phpunit/phpunit": "*"
     },

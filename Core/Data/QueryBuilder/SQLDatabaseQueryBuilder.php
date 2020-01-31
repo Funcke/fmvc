@@ -7,7 +7,7 @@ namespace Core\Data\QueryBuilder {
         public function select(string $table, array $fields): SQLDatabaseQueryBuilder;
         public function insert(string $table, array $values): SQLDatabaseQueryBuilder;
         public function update(string $table, array $values): SQLDatabaseQueryBuilder;
-        public function delete(string $table): SQLDatabaseQueryBuilder;
+        public function delete(string $table): SqlDatabaseQueryBuilder;
         public function where(string $key, string $value):SQLDatabaseQueryBuilder;
         public function build():string;
     }

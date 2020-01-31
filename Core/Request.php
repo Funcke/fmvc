@@ -17,5 +17,6 @@ namespace Core
         public $headers;
         public $session;
         public $cookies;
+        public $validation;
     }
 }

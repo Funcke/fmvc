@@ -4,6 +4,7 @@ namespace Core
 
     use Core\Environment\EnvironmentAdapter;
     use Core\PageUtils;
+    use Dry\Exception\InvalidSchemaException;
 
     /**
      * Dispatches incoming request and prepares Request DTO
@@ -57,6 +58,7 @@ namespace Core
                     }
                 }
             }
+            $this->validate($request);
             require_once('Controller/'. explode('::', $request->action)[0].'.php');
             $action($request);
         }
@@ -72,7 +74,6 @@ namespace Core
                 $request->uri = explode($base_url, $request->uri)[1];
             else
                 $request->uri = \substr($request->uri, 1);
-
             if(!array_key_exists($request->uri, $this->routes)) 
             {
                 PageUtils::renderErrorPage(array("code" => 404, "message" => "url not found!"));
@@ -102,6 +103,9 @@ namespace Core
                     if($this->environment->server()["CONTENT_TYPE"] == "multipart/form-data" || $this->environment->server()["CONTENT_TYPE"] == "application/x-www-form-urlencoded"){
                         $request->params = array_replace([], $this->environment->post()); 
                         break;
+                    } else {
+                        $request->params = json_decode(file_get_contents("php://input"), true);
+                        break;
                     }
                 case 'PUT':
                 case 'DELETE': parse_str(file_get_contents('php://input'), $request->params); break;
@@ -113,9 +117,25 @@ namespace Core
             $request->headers = $this->environment->headers();
             $request->session = $this->environment->session();
             $request->cookies = $this->environment->cookies();
-            $request->action = $this->routes[$request->uri][$this->environment->server()["REQUEST_METHOD"]];
+            $request->action = $this->routes[$request->uri][$this->environment->server()["REQUEST_METHOD"]][0];
+            if(count($this->routes[$request->uri][$this->environment->server()["REQUEST_METHOD"]]) == 2)
+                $request->validation = $this->routes[$request->uri][$this->environment->server()["REQUEST_METHOD"]][1];
             $request->method = $this->environment->server()["REQUEST_METHOD"];
             $this->getRequestParams($request);
+        }
+
+        private function validate(Request &$request)
+        {
+            try {
+                if($request->validation !== null) {
+                    require_once('Validation/'.$request->validation.'.php');
+                    (new $request->validation())->validate($request->params);
+                }
+            } catch(InvalidSchemaException $e) {
+                http_response_code(403);
+                echo "Invalid Request. Message: ".$e->getMessage();
+                die();
+            }
         }
     }
 }
