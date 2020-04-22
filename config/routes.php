@@ -1,17 +1,12 @@
 <?php
   return [
     'base_url' => '/', #please do only add subfolders
-    '' => [
-      'GET' =>['ProfileController::test', 'ExampleSchema']
-    ],
     'authenticate' => [
-      'POST' => ['AuthenticationController::new'],
-      'PUT' => ['AuthenticationController::login']
+      'GET' => ['SessionController::create'],
+      'POST' => ['SessionController::login'],
+      'PUT' => ['SessionController::login']
     ],
-    'profile' => [
-      'GET' => ['ProfileController::view']
+    'authenticate/logout' => [
+      'GET' => ['SessionController::logout']
     ],
-      'show' => [
-          'GET' => ['ProfileController::showUserStruct']
-      ]
   ];
