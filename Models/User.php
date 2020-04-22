@@ -13,7 +13,7 @@ namespace Models
         /**
          * @var integer PRIMARY KEY AUTOINCREMENT
          */
-        public $Id;
+        public $id;
         /**
          * @var VARCHAR(50)
          */
@@ -21,19 +21,31 @@ namespace Models
         /**
          * @var VARCHAR(50)
          */
-        public $Email;
+        public $Firstname;
+        /**
+         * @var VARCHAR(50)
+         */
+        public $Lastname;
         /**
          * @var VARCHAR(100)
          */
+        public $Email;
+        /**
+         * @var VARCHAR(256)
+         */
         public $Password;
+        /**
+         * @var VARCHAR(240)
+         */
+        public $Description;
         /**
          * @var date
          */
         public $Birthdate;
         /**
-         * @var int
+         * @var VARCHAR(255)
          */
-        public $EmailConfirmed;
+        public $Image;
         /**
          * @var date
          */
@@ -43,7 +55,6 @@ namespace Models
         {
             parent::__construct();
             $this->CreatedAt = date("Y-m-d H:i:s");
-            $this->EmailConfirmed = 0;
         }
     }
 }
