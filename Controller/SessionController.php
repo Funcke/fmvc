@@ -20,16 +20,10 @@ class SessionController extends Controller
         )[0];
         if(is_object($user) == 1 && password_verify($request->params['password'], $user->Password) == 1) {
             $_SESSION['logedin'] = $user->id;
-            $_SESSION['selected_bot'] = 1;
             header('Location: '.(array_key_exists('origin', $request->params)? $request->params['origin'] : '/'));
         } else {
             header('Location: /authenticate');
         }
-    }
-    
-    public static function setBot(&$request) {
-        $_SESSION['selected_bot'] = $request->params['selected_bot'];
-        http_response_code(200);
     }
     
     public static function logout(Request &$request) 
