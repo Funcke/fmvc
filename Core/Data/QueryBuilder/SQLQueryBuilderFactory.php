@@ -2,11 +2,13 @@
 
 namespace Core\Data\QueryBuilder;
 
-class SQLQueryBuilderFactory {
+class SQLQueryBuilderFactory 
+{
     public static function generate(string $dialect) : SQLDatabaseQueryBuilder
     {
-        $builder;
-        switch($dialect) {
+        $builder = null;
+        switch($dialect) 
+        {
             case 'mysql': $builder = new MySQLDatabaseQueryBuilder(); break;
             case 'sqlite': $builder = new SQLiteDatabaseQueryBuilder(); break;
             case 'pgsql': break;

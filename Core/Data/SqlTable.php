@@ -21,16 +21,14 @@ abstract class SqlTable
      * @param string $query
      * @throws \Exception
      */
-    function __construct(string $name)
+    function __construct(string $name, $connection_name = '')
     {
         if(is_null($name))
             throw new \Exception('SqlTable has to have a name!!');
-        $env = (array_key_exists('env', $_ENV)? $_ENV['env']: 'default');
-        $this->connection = new SqlDataBase($env);
+        if(empty($connection_name))
+            $connection_name = (array_key_exists('env', $_ENV)? $_ENV['env']: 'default');
+        $this->connection = new SqlDataBase($connection_name);
         $this->name = $name;
-        if(empty($this->connection->execute("SELECT 1 FROM " . $name))){
-            $this->connection->execute(SqlTableCreator::create($name, $this->connection->dialect));
-        }
     }
 
     /**
@@ -44,7 +42,7 @@ abstract class SqlTable
     protected function store_raw(array $data):int
     {
         $builder = SQLQueryBuilderFactory::generate($this->connection->dialect);
-        $query = $builder->insert(SqlTableCreator::getTableName($this->name), $data)->build();
+        $query = $builder->insert($this->name, $data)->build();
         return $this->connection->execute($query);
     }
 
@@ -60,12 +58,13 @@ abstract class SqlTable
      * @return array with query results or false
      * @throws \Exception
      */
-    protected static function get_raw(string $name, array $fields, array $conditions):array
+    protected static function get_raw(string $name, array $fields, array $conditions, string $connection_name):array
     {
-        $env = (array_key_exists('env', $_ENV)? $_ENV['env']: 'default');
-        $connection = new SqlDataBase($env);
+        if(empty($connection_name))
+            $connection_name = (array_key_exists('env', $_ENV)? $_ENV['env']: 'default');
+        $connection = new SqlDataBase($connection_name);
         $builder= SQLQueryBuilderFactory::generate($connection->dialect);
-        $builder->select(SqlTableCreator::getTableName($name), $fields);
+        $builder->select($name, $fields);
         foreach($conditions as $field => $value)
         {
             $builder->where($field, $value);
@@ -89,7 +88,7 @@ abstract class SqlTable
     protected function update_raw(array $fields, array $conditions = null):int
     {
         $builder = SQLQueryBuilderFactory::generate($this->connection->dialect);
-        $builder->update(SqlTableCreator::getTableName($this->name), $fields);
+        $builder->update($this->name, $fields);
         if(!is_null($fields))
         {
             foreach($conditions as $field => $value)
@@ -114,7 +113,7 @@ abstract class SqlTable
     protected function delete_raw(array $conditions = null):int
     {
         $builder = SQLQueryBuilderFactory::generate($this->connection->dialect);
-        $builder->delete(SqlTableCreator::getTableName($this->name));
+        $builder->delete($this->name);
         $query = '';
         if($conditions != null)
         {
@@ -128,5 +127,9 @@ abstract class SqlTable
         }
         
         return $this->connection->execute($query);
+    }
+
+    protected function &getConnection() {
+        return $this->connection;
     }
 }

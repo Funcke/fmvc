@@ -2,41 +2,44 @@
 /**
  * Namespace containing all necessary classes of the framework
  */
-namespace Core\Data  
+namespace Core\Data;
+
+use \PDO;
+
+/**
+ * Class representing the Database Connection. The implemented driver has to be defined
+ * in the db.json file. As a connection meaning, the PDO class is used.
+ * @author Jonas Funcke <jonas@funcke.work>
+ */
+class SqlDataBase 
 {
-    use \PDO;
     /**
-     * Class representing the Database Connection. The implemented driver has to be defined
-     * in the db.json file. As a connection meaning, the PDO class is used.
-     * @author Jonas Funcke <jonas@funcke.work>
+     * Connection to the Database
+     * @var PDO
      */
-    class SqlDataBase 
+    private $connection;
+
+    public $dialect;
+
+    /**
+     * c'tor
+     * @param string $connection name of the connection configuration to open
+     * @throws \PDOException if connection to DB fails
+     * @throws \Exception if connection could not be opened
+     */
+    function __construct(string $connection = 'default', array $params = array()) 
     {
-        /**
-         * Connection to the Database
-         * @var PDO
-         */
-        private $connection;
-
-        public $dialect;
-
-        /**
-         * c'tor
-         * @param string $connection name of the connection configuration to open
-         * @throws \PDOException if connection to DB fails
-         * @throws \Exception if connection could not be opened
-         */
-        function __construct(string $connection = 'default', array $params = array()) 
+        if(empty($params))
+            $params = json_decode(file_get_contents('./config/db.json'), true)[$connection];
+    
+        $query = ConnectionStringProducer::produce($params);
+        $this->connection = new PDO($query, $params['username'], $params['password'], array(PDO::ATTR_PERSISTENT => TRUE));
+        $this->dialect = $params['protocol'];
+    
+        if($this->connection == false) 
         {
-            if(empty($params))
-                $params = json_decode(file_get_contents('./config/db.json'), true)[$connection];
-            $query = ConnectionStringProducer::produce($params);
-            $this->connection = new PDO($query, $params['username'], $params['password'], array(PDO::ATTR_PERSISTENT => TRUE));
-            $this->dialect = $params['protocol'];
-            if($this->connection == false) 
-            {
-                throw new \Exception('An error occured while connection to the databse!');
-            }
+            throw new \Exception('An error occured while connection to the databse!');
+        }
     }
 
     /**
@@ -74,6 +77,4 @@ namespace Core\Data
         $res = $this->connection->exec($command);
         return $res;
     }
-
-  }
 }

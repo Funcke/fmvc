@@ -23,7 +23,8 @@ class SqlTableCreator
      * @return string $query
      * @throws ReflectionException
      */
-    public static function create(String $name, string $dialect) {
+    public static function createFromClass(String $name, string $dialect)
+    {
         return self::generateQuery($name, $dialect);
     }
 
@@ -32,26 +33,15 @@ class SqlTableCreator
      * @return string - the SQL Query
      * @throws ReflectionException
      */
-    private static function generateQuery(string $name, string $dialect): string {
-        $reflector = new ReflectionClass($name);
-        $table = explode('*', explode('@table ', $reflector->getDocComment())[1])[0];
+    private static function generateQuery(string $name, string $dialect): string
+    {
+        $table = PHPDocUtils::getClassAnnotation($name, 'table');
         $fields = array_keys(get_class_vars($name));
         $types = array();
         foreach($fields as $field) {
-            $types[$field] = explode('*', explode('@var ', $reflector->getProperty($field)->getDocComment())[1])[0];
+            $types[$field] = PHPDocUtils::getPropertyAnnotation($name, $field, 'var');
         }
         $query = (SQLQueryBuilderFactory::generate($dialect))->create($table, $types)->build();
         return $query;
-    }
-    
-    /**
-     * provides table name annotated in @table phpdoc comment above class definition of the provided class.
-     * @param $classname String - name in format (namespace\class) of the targeted class
-     * @return string - name of the class
-     * @throws ReflectionException
-     */
-    public static function getTableName(string $className): string {
-        $reflector = new ReflectionClass($className);
-        return explode('*', explode('@table ', $reflector->getDocComment())[1])[0];
     }
 }

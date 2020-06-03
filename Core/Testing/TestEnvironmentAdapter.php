@@ -3,6 +3,9 @@ namespace Core\Testing;
 
 use Core\Environment\EnvironmentAdapter;
 
+/**
+ * 
+ */
 class TestEnvironmentAdapter implements EnvironmentAdapter
 {
     private $server;
@@ -21,7 +24,8 @@ class TestEnvironmentAdapter implements EnvironmentAdapter
         array $session = NULL,
         array $cookies = NULL,
         array $headers = NULL
-    ) {
+    ) 
+    {
         $this->server = array('REQUEST_URI' => $request_uri, 'REQUEST_METHOD' => $request_method, 'CONTENT_TYPE' => $content_type);
         $this->get = $get;
         $this->post = $post;
@@ -29,6 +33,7 @@ class TestEnvironmentAdapter implements EnvironmentAdapter
         $this->cookies = $cookies;
         $this->headers = $headers;
     }
+    
     public function server() : array 
     {
         return $this->server;
