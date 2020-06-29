@@ -18,7 +18,7 @@ abstract class DataObject extends SqlTable
         $fullName = PHPDocUtils::getClassAnnotation(get_called_class(), 'table');
         $connection = PHPDocUtils::getClassAnnotation(get_called_class(), 'connection');
         parent::__construct($fullName, $connection);
-
+        
         if(empty($this->getConnection()->execute("SELECT 1 FROM " . $fullName)))
         {
             $this->getConnection()->execute(SqlTableCreator::createFromClass(get_called_class(), $this->getConnection()->dialect));

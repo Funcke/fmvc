@@ -52,6 +52,7 @@ class Controller
      */
     public static function renderJSON($output) 
     {
+        header('Content-Type', 'application/json');
         return json_encode($output);
     }   
 }

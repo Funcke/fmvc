@@ -1,7 +1,6 @@
 <?php
 namespace Core\Data;
 
-use Core\Data\QueryBuilder\SQLDatabaseQueryBuilder;
 use Core\Data\QueryBuilder\SQLQueryBuilderFactory;
 
 /**

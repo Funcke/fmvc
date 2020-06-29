@@ -4,15 +4,56 @@ namespace Core\Testing;
 use Core\Environment\EnvironmentAdapter;
 
 /**
+ * Adapter to provide access to common resources of
+ * an PHP environment.
  * 
+ * Serves as mocking adapter for testing purposes.
+ * 
+ * @author Jonas Funcke <jonas@funcke.work>
+ * @package Core\Testing
  */
 class TestEnvironmentAdapter implements EnvironmentAdapter
 {
+    /**
+     * Can hold data which would normally be stored
+     * in the $_SERVER variable.
+     * 
+     * @var array
+     */
     private $server;
+    /**
+     * Holds data which would normally be populated into
+     * $_GET superglobal.
+     * 
+     * @var array
+     */
     private $get;
+    /**
+     * Holds data which would normally be populated into
+     * $_POST superglobal.
+     * 
+     * @var array
+     */
     private $post;
+    /**
+     * Holds data which would normally be populated into
+     * $_SESSION superglobal.
+     * 
+     * @var array
+     */
     private $session;
+    /**
+     * Holds data which would normally be populated into
+     * $_COOKIE superglobal.
+     * 
+     * @var array
+     */
     private $cookies;
+    /**
+     * Represents header provider.
+     * 
+     * @var array
+     */
     private $headers;
 
     public function __construct(
