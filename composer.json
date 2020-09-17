@@ -1,7 +1,7 @@
 {
-    "name": "jonas/project",
-    "description": "Project repo for my app",
-    "type": "project",
+    "name": "FMVC/Core",
+    "description": "Core library of FMVC framework",
+    "type": "library",
     "license": "MIT",
     "authors": [
         {
@@ -18,10 +18,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Controller\\": "Controller/",
-            "Core\\": "Core/",
-            "Middleware\\": "Middleware/",
-            "Models\\": "Models"
+            "FMVC\\": "lib/"
         }
     }
 }

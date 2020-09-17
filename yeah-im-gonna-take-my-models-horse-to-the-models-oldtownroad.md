@@ -10,14 +10,14 @@ FMVC provides models, you may know this from other packages such as ActiveModel 
 
 ### Yes, but how can I do that?
 
-So at first, we have like a base class. `Core\Data\DataObject` This Base class is hold the basic methods to read, write, update and delete your models. 
+So at first, we have like a base class. `FMVC\Data\DataObject` This Base class is hold the basic methods to read, write, update and delete your models. 
 
 Then we create out desired model like this:
 
 ```php
 <?php
 namespace Models;
-use Core\Data\DataObject;
+use FMVC\Data\DataObject;
 
 /**
  * Class User

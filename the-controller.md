@@ -2,23 +2,23 @@
 
 ## Up and Running 👟
 
-Every route you specify in your application will end in the static method of a controller. Controller are PHP classes that are derived from the `Core/Controller` base class.
+Every route you specify in your application will end in the static method of a controller. Controller are PHP classes that are derived from the `FMVC/Controller` base class.
 
 This will look something like this:
 
 ```php
 #Controllers/MyController.php
-use Core\Controller;
+use FMVC\Controller;
 class MyController extends Controller {
     # Do your magic!
 }
 ```
 
-Now, after you got your fancy new controller, we need to populate it with some methods. These methods have to be public, static and need to get a reference on a `Core/Request` class instance. Like this:
+Now, after you got your fancy new controller, we need to populate it with some methods. These methods have to be public, static and need to get a reference on a `FMVC/Request` class instance. Like this:
 
 ```php
 #Contorllers/MyController.php
-use Core\Controller;
+use FMVC\Controller;
 class MyController extends Controller {
     public static function handler(&$request) {
          self::render(
@@ -32,7 +32,7 @@ class MyController extends Controller {
 }
 ```
 
-Here we utilized a method already provided by the `Core/Controller` parent class:
+Here we utilized a method already provided by the `FMVC/Controller` parent class:
 
 ```php
 render(string $template, Request $request, array $params);
