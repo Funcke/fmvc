@@ -1,5 +1,5 @@
 {
-    "name": "FMVC/Core",
+    "name": "fmvc/core",
     "description": "Core library of FMVC framework",
     "type": "library",
     "license": "MIT",
