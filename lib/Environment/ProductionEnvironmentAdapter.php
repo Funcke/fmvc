@@ -14,7 +14,7 @@ class ProductionEnvironmentAdapter implements EnvironmentAdapter
     }
     public function &post() : array
     {
-        return $_POST;
+        return array_merge($_POST, $_FILES);
     }
     public function &session() : array
     {

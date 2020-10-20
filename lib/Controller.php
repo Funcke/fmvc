@@ -26,7 +26,7 @@ class Controller
      * 
      * @return string - rendered html in string format.
      */
-    public static function render(string $name, Request $request, array $params) 
+    public function render(string $name, Request $request, array $params) 
     {
         $result = '';
         
@@ -50,7 +50,7 @@ class Controller
      * 
      * @return string - serialized object
      */
-    public static function renderJSON($output) 
+    public function renderJSON($output) 
     {
         header('Content-Type', 'application/json');
         return json_encode($output);

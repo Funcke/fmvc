@@ -3,7 +3,13 @@
 namespace FMVC\Data\QueryBuilder;
 
 /**
- * Builder providing an easy to use api for creating CRUD SQL commands
+ * Builder providing an easy to use api for creating CRUD SQL commands.
+ * This class provides an interface to easily generate SQLite queries.
+ * Please note that this builder does still have a lot of place for improvement.
+ * For example, joins do still not work. 
+  * Please note that in this place, the 
+ * capabilities of @DataObject are providing the adequate capabilities to 
+ * dynamically load data assoicated with the defined model.
  * 
  * @author Jonas Funcke <jonas@funcke.work>
  */

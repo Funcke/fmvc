@@ -96,9 +96,7 @@ class Router
     {
         $request->uri = $this->formatURI();
         try {
-            if(!\array_key_exists($request->uri, $this->routes))
-                throw new RequestError(404, 'Url not found!');
-           
+            $this->existingURI($request);
             $this->handlePreflightRequest($request); 
                 
             if($this->environment->server()['REQUEST_METHOD'] !== 'OPTIONS') 
@@ -158,8 +156,9 @@ class Router
         }
 
         $this->validate($request);
-        require_once('Controller/'. explode('::', $request->action)[0].'.php');
-        return $action($request);
+        list($controller, $action) = explode('::', $request->action);
+        require_once('Controller/'. $controller .'.php');
+        return (new $controller())->$action($request);
     }
 
     /**
@@ -190,6 +189,19 @@ class Router
         if(StringUtils::endsWith($uri, '/'))
             $uri = \substr($uri, 0, -1);
         return $uri;
+    }
+
+    /**
+     * Checks if URI is available at this application.
+     * 
+     * @param $request Request, the request object that is currently being dispatched.
+     * 
+     * @throws RequestError, throws exception if the specified URI is invalid
+     */
+    private function existingURI($request)
+    {
+        if(!\array_key_exists($request->uri, $this->routes))
+            throw new RequestError(404, 'Url not found!');
     }
 
     /**
@@ -329,13 +341,11 @@ class Router
      */
     private function validate(Request &$request)
     {
-        try {
-            if($request->validation !== null) {
-                require_once('Validation/'.$request->validation.'.php');
-                (new $request->validation())->validate($request->params);
-            }
-        } catch(InvalidSchemaException $e) {
-            throw new RequestError(403, "Invalid Request. Message: ".$e->getMessage());
+        if($request->validation !== null) {
+            require_once('Validation/'.$request->validation.'.php');
+            $violations = (new $request->validation())->validate($request->params);
+            if(!empty($violations))
+                throw new RequestError(403, "Invalid Request. Violations: ".json_encode($violations));
         }
     }
 }

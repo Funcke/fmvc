@@ -1,9 +1,13 @@
 <?php
 declare(strict_types=1);
 
+require_once("vendor/autoload.php");
+
 use PHPUnit\Framework\TestCase;
 use FMVC\Data\ConnectionStringProducer;
-use Models\User;
+use FMVC\Data\DataObject;
+
+require_once("test/fixtures/User.php");
 
 final class DataObjectTest extends TestCase {
     
