@@ -2,6 +2,7 @@
 namespace FMVC;
 
 use FMVC\Util\PageUtils;
+use FMVC\Util\HttpActionTrait;
 
 /**
  * Base class for every controller.
@@ -11,6 +12,7 @@ use FMVC\Util\PageUtils;
  */
 class Controller 
 {
+    use HttpActionTrait;
     /**
      * Generates HTML from the given php files and stores it in a string.
      * 
