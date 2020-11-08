@@ -1,11 +1,11 @@
 <?php
 namespace FMVC;
 
+use FMVC\Environment\ApplicationContext;
 use FMVC\Environment\EnvironmentAdapter;
 use FMVC\Util\PageUtils;
 use FMVC\Util\StringUtils;
 use FMVC\RequestError;
-use Dry\Exception\InvalidSchemaException;
 
 /**
  * Request Lifecycle.
@@ -151,13 +151,14 @@ class Router
     {
         foreach($request->middleware as $mw)
         {
-            require_once('Middleware/' .explode('::',$mw)[0] . '.php');
+            ApplicationContext::getInstance()->requireMiddleware(explode('::',$mw)[0]);
             $mw($request);
         }
 
         $this->validate($request);
         list($controller, $action) = explode('::', $request->action);
-        require_once('Controller/'. $controller .'.php');
+        $controller .= "Controller";
+        ApplicationContext::getInstance()->requireController($controller);
         return (new $controller())->$action($request);
     }
 
@@ -342,7 +343,7 @@ class Router
     private function validate(Request &$request)
     {
         if($request->validation !== null) {
-            require_once('Validation/'.$request->validation.'.php');
+            ApplicationContext::getInstance()->requireValidation($request->validation);
             $violations = (new $request->validation())->validate($request->params);
             if(!empty($violations))
                 throw new RequestError(403, "Invalid Request. Violations: ".json_encode($violations));

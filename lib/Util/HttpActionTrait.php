@@ -2,23 +2,25 @@
 
 namespace FMVC\Util;
 
+use Serializable;
+
 trait HttpActionTrait {
-    public function Ok($responseBody = '') 
+    public function Ok(Serializable $responseBody = NULL) 
     {
         http_response_code(200);
-        return $responseBody;
+        return $responseBody->serialize() ?? '' ;
     }
     
-    public function Created($responseBody = '')
+    public function Created(Serializable $responseBody = NULL)
     {
         http_response_code(201);
-        return $responseBody;
+        return $responseBody->serialize() ?? '';
     }
 
-    public function Accepted($responseBody = '')
+    public function Accepted(Serializable $responseBody = NULL)
     {
         http_response_code(202);
-        return $responseBody;
+        return $responseBody->serialize() ?? '';
     }
     
     public function NoContent() 
@@ -27,22 +29,22 @@ trait HttpActionTrait {
         return '';
     }
 
-    public function BadRequest($responseBody = 'Bad Request')
+    public function BadRequest(Serializable $responseBody = NULL)
     {
         return PageUtils::renderErrorPage(
             array(
                 'code' => 400,
-                'message' => $responseBody
+                'message' => $responseBody->serialize ?? 'Bad Request'
             )
         );
     }
     
-    public function NotFound($responseBody = 'Not Found')
+    public function NotFound(Serializable $responseBody = NULL)
     {
         return PageUtils::renderErrorPage(
             array(
                 'code' => 404,
-                'message' => $responseBody
+                'message' => $responseBody->serialize() ?? 'Not Found'
             )
         );
     }

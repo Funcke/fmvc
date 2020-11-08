@@ -1,13 +1,17 @@
 <?php
 
 namespace FMVC\Data;
+
+use BadMethodCallException;
+use Serializable;
+
 /**
  * Abstraction of SqlTable providing default
  * modificaiton methods for Objects.
  * 
  * @author Jonas Funcke <jonas@funcke.work>
  */
-abstract class DataObject extends SqlTable
+abstract class DataObject extends SqlTable implements Serializable
 {
     /**
      * DataObject constructor.
@@ -163,5 +167,15 @@ abstract class DataObject extends SqlTable
         $this->{$as} = function() use($class, $with) {
             $class::findById($this->$with);
         };
+    }
+
+    public function serialize()
+    {
+        return json_encode($this);
+    }
+
+    public function unserialize($serialized)
+    {
+        throw new BadMethodCallException("Not Implemented");
     }
 }

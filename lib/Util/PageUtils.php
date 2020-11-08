@@ -27,10 +27,8 @@ class PageUtils
         http_response_code($params["code"]);
         
         \ob_start();
+        echo $params["message"];
         
-        $name = "error";
-        $params['title'] = $params['code'];
-        include("views/base.php");
         $result = \ob_get_clean();
         
         \ob_end_flush();
