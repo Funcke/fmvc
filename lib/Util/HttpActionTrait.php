@@ -8,19 +8,19 @@ trait HttpActionTrait {
     public function Ok(Serializable $responseBody = NULL) 
     {
         http_response_code(200);
-        return $responseBody->serialize() ?? '' ;
+        return $responseBody?->serialize() ?? '' ;
     }
     
     public function Created(Serializable $responseBody = NULL)
     {
         http_response_code(201);
-        return $responseBody->serialize() ?? '';
+        return $responseBody?->serialize() ?? '';
     }
 
     public function Accepted(Serializable $responseBody = NULL)
     {
         http_response_code(202);
-        return $responseBody->serialize() ?? '';
+        return $responseBody?->serialize() ?? '';
     }
     
     public function NoContent() 
@@ -34,7 +34,7 @@ trait HttpActionTrait {
         return PageUtils::renderErrorPage(
             array(
                 'code' => 400,
-                'message' => $responseBody->serialize ?? 'Bad Request'
+                'message' => $responseBody?->serialize() ?? 'Bad Request'
             )
         );
     }
@@ -44,7 +44,7 @@ trait HttpActionTrait {
         return PageUtils::renderErrorPage(
             array(
                 'code' => 404,
-                'message' => $responseBody->serialize() ?? 'Not Found'
+                'message' => $responseBody?->serialize() ?? 'Not Found'
             )
         );
     }
